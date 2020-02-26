@@ -1,0 +1,24 @@
+{
+  "name": "wisp-js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maineiac/wisp-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maineiac/wisp-js/issues"
+  },
+  "homepage": "https://github.com/Maineiac/wisp-js#readme",
+  "description": ""
+}
