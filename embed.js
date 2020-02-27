@@ -11,7 +11,11 @@ var table = require('text-table');
 var config = require('./config.js');
 
 exports.gen = function(type, response=null) {
-    var data = response.attributes;
+    if(!response) {
+        type = "catastrophic";
+    } else {
+        data = response.attributes;
+    }
     var embed;
     switch(type) {
         case 'status':
@@ -36,14 +40,52 @@ exports.gen = function(type, response=null) {
             };
         break;
         case 'players':
+            var color = 13632027;
+            if(data.state == "off") {
+                name = "No Response";
+                t = "The server appears to be offline";
+            } else {
+                name = data.query.name;
+                var timestr, name, color, t;
+                var array = [['Name', 'Score', 'Time']];
+                var players = data.query.players.concat(data.query.bots);
+                color = 13632027;
+                for (var i = 0; i < players.length; i++) {
+                    var r,s;
+                    var time = Math.floor(players[i].time);
+                    var timestr = `${time}s`;
+                    if (time >= 60) {
+                      r = time%60;
+                      time = Math.floor(time / 60);
+                      timestr = `${time}m ${r}s`;
+                    }
+                    if (time >= 60) {
+                      s = r;
+                      r = time%60;
+                      time = Math.floor(time / 60);
+                      timestr = `${time}h ${r}m ${s}s`;
+                    }
+
+                    array[i+1] = [  players[i].name, 
+                                    players[i].score, 
+                                    timestr
+                                ];
+                }
+                if(!array[1]) {
+                    t = "There are no players currently on the server.";
+                } else {
+                    console.log(array)
+                    t = table(array, { align: [ 'l', 'c', 'c' ], hsep: [ '    ' ] });
+                }
+            }
             embed = {
                 "title": name,
-                "description": `\`\`\`${data}\`\`\``,
+                "description": `\`\`\`${t}\`\`\``,
                 "author": {
                     "name": "Player List",
                     "icon_url": config.icons.players
                 },
-                "color": 53611
+                "color": color
             };
         break;
         case 'cmd':
@@ -99,6 +141,17 @@ exports.gen = function(type, response=null) {
             embed = {
                 "title": data[0],
                 "description": data[1],
+                "author": {
+                    "name": "Error!",
+                    "icon_url": config.icons.error
+                },
+                "color": 13632027
+            };
+        break;
+        case 'catastrophic':
+            embed = {
+                "title": "There was a serious problem.",
+                "description": "I was unable to connect to the panel with the URL provided. Either I have been misconfigured, or WISP died. I supposed you could be using a custom url and the domain expired, or lots of other issues. You or whoever has access should check my configuration though.",
                 "author": {
                     "name": "Error!",
                     "icon_url": config.icons.error

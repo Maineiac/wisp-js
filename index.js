@@ -56,7 +56,7 @@ client.on('message', msg => { // Handles alls messages that the bot can see.
 
                 }
             }
-
+            
             if(!hasperms) {
                 msg.channel.send(`No permission to run server command : \`${args[1]}\``);
 
@@ -65,11 +65,21 @@ client.on('message', msg => { // Handles alls messages that the bot can see.
                 switch(args[1]) {
 
                     case 'status':
-                        msg.channel.send("dead!");
+
+                        request.get(`${config.servers[args[0]]}/utilization`)
+                            .then(function (response) {
+                                msg.channel.send(embed.gen("status", response.data));
+                            }).catch(console.error);
+
                     break;
 
                     case 'players':
-                        msg.channel.send("You don't have any.");
+
+                        request.get(`${config.servers[args[0]]}/utilization`)
+                        .then(function (response) {
+                            msg.channel.send(embed.gen("players", response.data));
+                        }).catch(console.error);
+
                     break;
                     case 'cmd':
                         msg.channel.send("Ok commander!");
