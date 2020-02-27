@@ -1,4 +1,4 @@
-exports.get = function(error) {
+exports.parseError = function(error) {
     var array;
     switch(error) {
         case 400:
