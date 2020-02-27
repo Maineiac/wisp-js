@@ -9,11 +9,18 @@
                 A discord bot for use with the WISP API 
                     https://wisp.gg/
 
-                Documentation
+                WISP Documentation
                     https://docs.panel.gg/
+
+                GitHub Repo/Readme
+                    https://github.com/Maineiac/wisp-js
 
                 Written by Maineiac
                     https://maineiac.dev
+                
+                Note :  I don't usually release my work. 
+                        Sorry for the mess, 
+                        and the practically useless comments.
 
 */
 //Debug
@@ -21,6 +28,7 @@ var util = require("util");
 
 // Load config and dependencies.
 const config = require('./config.js');
+const errorHandler = require('./error.js');
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -54,7 +62,7 @@ client.on('ready', () => { // Called when the bot is "ready"
 client.on('message', msg => { // Handles alls messages that the bot can see.
     if (msg.content === '!gmod') { // Test command "!gmod"
 
-        // Get Server Resourc
+        // Get Server Resource
         instance.get(`${config.servers.gmod}/utilization`)
         .then(function (response) { // Successfully received a response.
 
@@ -66,6 +74,8 @@ client.on('message', msg => { // Handles alls messages that the bot can see.
 
             if (error.response) { // Error response received.
                 msg.reply(error.response.status);
+                var handledError = errorHandler.get(error.response.status)
+                msg.reply(`*${handledError[0]}*\n${handledError[1]}`);
 
             } else if (error.request) { // No response.
                 msg.reply("Couldn't find domain. Check that the URL is properly configured.");
