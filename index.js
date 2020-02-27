@@ -60,6 +60,49 @@ client.on('ready', () => { // Called when the bot is "ready"
 });
 
 client.on('message', msg => { // Handles alls messages that the bot can see.
+    if(msg.content.startsWith(config.prefix) && !msg.author.bot) {
+        var args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
+        if(config.servers.hasOwnProperty(args[0])) {
+            var hasperms = false;
+            for (var i = 0; i < config.permissions[args[1]].length; i++) {
+                if(msg.member.roles.has(config.permissions[args[1]][i]) 
+                    || config.permissions[args[1]].indexOf("*") > -1) {
+                    hasperms = true;
+                }
+            }
+            if(!hasperms) {
+                msg.channel.send(`No permission to run server command : \`${args[1]}\``)
+            } else {
+                switch(args[1]) {
+                    case 'status':
+                        msg.channel.send("dead!");
+                    break;
+                    case 'players':
+                        msg.channel.send("You don't have any.");
+                    break;
+                    case 'cmd':
+                        msg.channel.send("Ok commander!");
+                    break;
+                    case 'power':
+                        msg.channel.send("POWAH!");
+                    break;
+                }
+            }
+        } else {
+            switch(args[0]) {
+                case 'servers':
+                    msg.channel.send("We have servers, but you can't see them :)");
+                break;
+                case 'help':
+                    msg.channel.send("This should say something");
+                break;
+                default:
+                    msg.channel.send("Unknown command.");
+                break;
+            }
+        }
+    }
+    /*
     if (msg.content === '!gmod') { // Test command "!gmod"
 
         // Get Server Resource
@@ -87,7 +130,7 @@ client.on('message', msg => { // Handles alls messages that the bot can see.
             }
             
         });
-    }
+    }*/
 });
 
 // Turn the key (connect to discord)
