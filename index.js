@@ -47,19 +47,25 @@ client.on('message', msg => { // Handles alls messages that the bot can see.
 
         if(config.servers.hasOwnProperty(args[0])) {
             var hasperms = false;
+            var valid = false;
+            if(config.permissions.hasOwnProperty(args[1])) {
+                valid = true;
+                for (var i = 0; i < config.permissions[args[1]].length; i++) {
 
-            for (var i = 0; i < config.permissions[args[1]].length; i++) {
+                    if(msg.member.roles.has(config.permissions[args[1]][i]) 
+                    || config.permissions[args[1]].indexOf("*") > -1) {
+                        hasperms = true;
 
-                if(msg.member.roles.has(config.permissions[args[1]][i]) 
-                || config.permissions[args[1]].indexOf("*") > -1) {
-                    hasperms = true;
-
-                }
+                    }
+                } 
             }
             
-            if(!hasperms) {
+            if(!hasperms && valid) {
                 msg.channel.send(`No permission to run server command : \`${args[1]}\``);
 
+            } else if(!valid) {
+                msg.channel.send(`Invalid command : \`${args[1]}\``);
+                
             } else {
 
                 switch(args[1]) {

@@ -49,7 +49,7 @@ exports.gen = function(type, response=null) {
                 var timestr, name, color, t;
                 var array = [['Name', 'Score', 'Time']];
                 var players = data.query.players.concat(data.query.bots);
-                color = 13632027;
+                color = 53611;
                 for (var i = 0; i < players.length; i++) {
                     var r,s;
                     var time = Math.floor(players[i].time);
