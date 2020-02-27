@@ -28,30 +28,12 @@ var util = require("util");
 
 // Load config and dependencies.
 const config = require('./config.js');
-const errorHandler = require('./error.js');
+const request = require('./request.js');
+const embed = require("./embed.js");
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-const axios = require('axios');
-const instance = axios.create({
-
-    /*  This is all information that is used to make get/post resquests
-        from/to the WISP API. The documentation can be found here :
-            https://docs.panel.gg/#introduction
-        This configures axios one time to use the information to make requests.
-    */
-    baseURL: `${config.PanelURL}api/client/servers/`,
-    timeout: 1000,
-    headers: {
-
-        'Content-Type': 'application/json',
-        'Accept': 'application/vnd.wisp.v1+json',
-        'Authorization': `Bearer ${config.WISPAPIKey}`
-
-    }
-
-});
 
 // This is my favorite part :) The action!
 
@@ -62,21 +44,30 @@ client.on('ready', () => { // Called when the bot is "ready"
 client.on('message', msg => { // Handles alls messages that the bot can see.
     if(msg.content.startsWith(config.prefix) && !msg.author.bot) {
         var args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
+
         if(config.servers.hasOwnProperty(args[0])) {
             var hasperms = false;
+
             for (var i = 0; i < config.permissions[args[1]].length; i++) {
+
                 if(msg.member.roles.has(config.permissions[args[1]][i]) 
-                    || config.permissions[args[1]].indexOf("*") > -1) {
+                || config.permissions[args[1]].indexOf("*") > -1) {
                     hasperms = true;
+
                 }
             }
+
             if(!hasperms) {
-                msg.channel.send(`No permission to run server command : \`${args[1]}\``)
+                msg.channel.send(`No permission to run server command : \`${args[1]}\``);
+
             } else {
+
                 switch(args[1]) {
+
                     case 'status':
                         msg.channel.send("dead!");
                     break;
+
                     case 'players':
                         msg.channel.send("You don't have any.");
                     break;
@@ -102,35 +93,6 @@ client.on('message', msg => { // Handles alls messages that the bot can see.
             }
         }
     }
-    /*
-    if (msg.content === '!gmod') { // Test command "!gmod"
-
-        // Get Server Resource
-        instance.get(`${config.servers.gmod}/utilization`)
-        .then(function (response) { // Successfully received a response.
-
-            msg.reply(util.inspect(response.data)); // Respond to the user with the data "stats" object.
-            console.log(response.data);
-
-        })
-        .catch(function (error) { 
-
-            if (error.response) { // Error response received.
-                msg.reply(error.response.status);
-                var handledError = errorHandler.get(error.response.status)
-                msg.reply(`*${handledError[0]}*\n${handledError[1]}`);
-
-            } else if (error.request) { // No response.
-                msg.reply("Couldn't find domain. Check that the URL is properly configured.");
-
-            } else {  // Something else, this seems really bad.
-                msg.reply("Something really bad happened");
-                console.log('Error', error.message);
-
-            }
-            
-        });
-    }*/
 });
 
 // Turn the key (connect to discord)
