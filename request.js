@@ -1,6 +1,7 @@
 const config = require('./config.js');
 const util = require('util');
-function parseError(e) {
+
+function formatErr(e) {
     var array;
     switch(e) {
         case 400:
@@ -21,6 +22,9 @@ function parseError(e) {
         case 412:
             array = ['412 Precondition Failed', 'This server is unable to perform this action. It\'s probably down.'];
         break;
+        case 422:
+            array = ['422 Unprocessable Entity', 'There was a problem with a post request. This is likely Maineiac\s fault.'];
+        break;
         case 429:
             array = ['429 Too Many Requests', 'Your bot has tried to use the api too many times recently, it has been temporarily rate limited'];
         break;
@@ -37,8 +41,9 @@ function parseError(e) {
             array = ['Unknown error', 'Something really bad probably happened...'];
         break;
     }
-    result = array;
+    return array;
 }
+
 const instance = require('axios').create({
 
     /*  This is all information that is used to make get/post resquests
@@ -62,22 +67,28 @@ exports.get = async function(url) {
     var result;
     await instance.get(url)
     .then(function (response) { // Successfully received a response.
-        result = response;
+        return response;
     })
-    .catch(function (error) { 
-
-        if (error.response) { // Error response received.
-            result = parseError(error.response.status);
-
-        } else if (error.request) { // No response
-            result = "Couldn't find domain. Check that the URL is properly configured.";
-
-        } else {  // Something else, this seems really bad.
-            result = "Something really bad happened";
-            console.log('Error', error.message);
-
-        }
-        
+    .catch(function (error) {
+        var array = formatErr(error.response.status);
+        err = new Error("Encountered error");
+        err.code = array[0];
+        err.msg = array[1];
+        throw err;
     });
     return result;
+}
+
+exports.post = async function(url, data) {
+    var result;
+    await instance.post(url, data)
+        .then((response) => {
+            return response;
+        }).catch(function (error) {
+            var array = formatErr(error.response.status);
+            err = new Error("Encountered error");
+            err.code = array[0];
+            err.msg = array[1];
+            throw err;
+      });
 }
