@@ -8,7 +8,6 @@
 */
 const config = require('../config.js');
 const errors = require('./error.js').type;
-const util = require('util');
 
 const instance = require('axios').create({
 
@@ -29,13 +28,16 @@ const instance = require('axios').create({
 
 });
 
+// This is my get() function. It basically just shortens axios.get()
 exports.get = async function(url) {
     var result;
     await instance.get(url)
     .then(function (response) { // Successfully received a response.
         result = response;
     })
-    .catch(function (error) {
+    .catch(function (error) { // Recieved an error code.
+        // Sometmes node returns an error, and sometime wisp returns an error
+        // So we check for both. Then we build the error and throw it.
         var code = error.code || error.response.status;
         err = new Error("Handling error");
         err.code = errors[code][0];
@@ -45,12 +47,14 @@ exports.get = async function(url) {
     return result;
 }
 
+// This is my post() function, it basically just shortens axios.post()
 exports.post = async function(url, data) {
     var result;
     await instance.post(url, data)
-    .then((response) => {
+    .then((response) => { // Successfully received a response.
         result = response;
     }).catch(function (error) {
+        // This handles errors the same way get() does.
         var code = error.code || error.response.status;
         err = new Error("Handling error");
         err.code = errors[code][0];
