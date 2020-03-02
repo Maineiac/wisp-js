@@ -6,6 +6,9 @@
     Written by Maineiac
     http://maineiac.dev
 */
+
+// This is just an object holding information about common errors.
+// It's here to keep request.js tidy.
 exports.type = {
     400: [
         '400 Bad Request', 
