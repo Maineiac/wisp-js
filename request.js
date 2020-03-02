@@ -37,6 +37,9 @@ function formatErr(e) {
         case 504:
             array = ['504 DaemonConnectionException', 'The daemon isn\'t responding. Contact WISP Support'];
         break;
+        case "ECONNABORTED":
+            array = ['Timed out', 'It appears this bot is running on a potato.'];
+        break;
         default:
             array = ['Unknown error', 'Something really bad probably happened...'];
         break;
@@ -52,7 +55,7 @@ const instance = require('axios').create({
         This configures axios one time to use the information to make requests.
     */
     baseURL: `${config.PanelURL}api/client/servers/`,
-    timeout: 1000,
+    timeout: 5000,
     headers: {
 
         'Content-Type': 'application/json',
@@ -67,28 +70,32 @@ exports.get = async function(url) {
     var result;
     await instance.get(url)
     .then(function (response) { // Successfully received a response.
-        return response;
+        result = response;
     })
     .catch(function (error) {
-        var array = formatErr(error.response.status);
+        var code = error.code || error.response.status;
+        var array = formatErr(code);
         err = new Error("Encountered error");
         err.code = array[0];
-        err.msg = array[1];
+        err.msg = array[1]; 
         throw err;
     });
+    console.log(result)
     return result;
 }
 
 exports.post = async function(url, data) {
     var result;
     await instance.post(url, data)
-        .then((response) => {
-            return response;
-        }).catch(function (error) {
-            var array = formatErr(error.response.status);
-            err = new Error("Encountered error");
-            err.code = array[0];
-            err.msg = array[1];
-            throw err;
-      });
+    .then((response) => {
+        result = response;
+    }).catch(function (error) {
+        var code = error.response.status || error.code;
+        var array = formatErr(code);
+        err = new Error("Encountered error");
+        err.code = array[0];
+        err.msg = array[1];
+        throw err;
+    });
+    return result;
 }
