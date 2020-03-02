@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "discord.js": "^11.5.1",
     "request": "^2.88.0",
     "text-table": "^0.2.0"
