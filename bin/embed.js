@@ -5,6 +5,9 @@
 
     Written by Maineiac
     http://maineiac.dev
+
+
+    This is a big mess, I'm aware.
 */
 
 var table = require('text-table');
@@ -43,6 +46,10 @@ exports.gen = function(type, data=null) {
             if(data.state == "off") {
                 name = "No Response";
                 t = "The server appears to be offline";
+            } else if(data.state == "starting") {
+                color = 16098851;
+                name = "Server hasn't started";
+                t = "The server seems to be in a starting state.";
             } else {
                 name = data.query.name;
                 var timestr, name, color, t;
@@ -150,17 +157,6 @@ exports.gen = function(type, data=null) {
             embed = {
                 "title": data[0],
                 "description": data[1],
-                "author": {
-                    "name": "Error!",
-                    "icon_url": config.icons.error
-                },
-                "color": 13632027
-            };
-        break;
-        case 'catastrophic':
-            embed = {
-                "title": "There was a serious problem.",
-                "description": "I was unable to connect to the panel with the URL provided. Either I have been misconfigured, or WISP died. I supposed you could be using a custom url and the domain expired, or lots of other issues. You or whoever has access should check my configuration though.",
                 "author": {
                     "name": "Error!",
                     "icon_url": config.icons.error
