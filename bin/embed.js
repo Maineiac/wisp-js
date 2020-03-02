@@ -8,7 +8,7 @@
 */
 
 var table = require('text-table');
-var config = require('./config.js');
+var config = require('../config.js');
 
 exports.gen = function(type, data=null) {
     var embed;
