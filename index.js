@@ -28,8 +28,8 @@ var util = require("util");
 
 // Load config and dependencies.
 const config = require('./config.js');
-const request = require('./request.js');
-const embed = require("./embed.js");
+const request = require('./bin/request.js');
+const embed = require("./bin/embed.js");
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
