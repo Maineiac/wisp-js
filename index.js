@@ -38,6 +38,7 @@ const client = new Discord.Client();
 // This is my favorite part :) The action!
 
 client.on('ready', () => { // Called when the bot is "ready"
+    console.log("Bot started.");
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
