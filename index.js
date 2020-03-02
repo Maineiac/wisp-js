@@ -110,6 +110,9 @@ client.on('message', msg => { // Handles all messages that the bot can see.
                             msg.channel.send(embed.gen("error", [error.code, error.msg]));
                         });
                     break;
+                    default:
+                        msg.channel.send("I had a big problem, this shouldn't happen. | 01");
+                    break;
                 }
             }
         } else {
@@ -118,10 +121,10 @@ client.on('message', msg => { // Handles all messages that the bot can see.
                     msg.channel.send(embed.gen("servers"));
                 break;
                 case 'help':
-                    msg.channel.send("This should say something");
+                    msg.channel.send(embed.gen("help"));
                 break;
                 default:
-                    msg.channel.send("Unknown command.");
+                    msg.channel.send("I had a big problem, this shouldn't happen. | 02");
                 break;
             }
         }
