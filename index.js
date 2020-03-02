@@ -41,15 +41,17 @@ client.on('ready', () => { // Called when the bot is "ready"
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', msg => { // Handles alls messages that the bot can see.
+client.on('message', msg => { // Handles all messages that the bot can see.
     if(msg.content.startsWith(config.prefix) && !msg.author.bot) {
         var args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
 
         if(config.servers.hasOwnProperty(args[0])) {
             var hasperms = false;
             var valid = false;
+
             if(config.permissions.hasOwnProperty(args[1])) {
                 valid = true;
+
                 for (var i = 0; i < config.permissions[args[1]].length; i++) {
 
                     if(msg.member.roles.has(config.permissions[args[1]][i]) 
@@ -70,25 +72,30 @@ client.on('message', msg => { // Handles alls messages that the bot can see.
 
                 switch(args[1]) {
 
-                    case 'status':
+                    case 'status': case 'players':
 
                         request.get(`${config.servers[args[0]]}/utilization`)
                             .then(function (response) {
-                                msg.channel.send(embed.gen("status", response.data));
-                            }).catch(console.error);
+                                msg.channel.send(embed.gen(args[1], response.data.attributes));
+                            }).catch((error) => {
+                                console.log(error.code)
+                                msg.channel.send(embed.gen("error", [error.code, error.msg]));
+                            });
 
                     break;
 
-                    case 'players':
-
-                        request.get(`${config.servers[args[0]]}/utilization`)
-                        .then(function (response) {
-                            msg.channel.send(embed.gen("players", response.data));
-                        }).catch(console.error);
-
-                    break;
                     case 'cmd':
-                        msg.channel.send("Ok commander!");
+                        var cmd = msg.content.replace("!"+args[0]+" "+args[1], "").trim();
+                        var options = {
+                                "command": cmd
+                        };
+                        request.post(`${config.servers[args[0]]}/command`, options)
+                        .then(function (response) {
+                            msg.channel.send(embed.gen("cmd", `Successfully sent command : \`${cmd}\``));
+                        }).catch((error) => {
+                            msg.channel.send(embed.gen("error", [error.code, error.msg]));
+                        });
+
                     break;
                     case 'power':
                         msg.channel.send("POWAH!");
