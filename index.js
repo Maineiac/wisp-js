@@ -78,8 +78,9 @@ client.on('message', msg => { // Handles all messages that the bot can see.
                             .then(function (response) {
                                 msg.channel.send(embed.gen(args[1], response.data.attributes));
                             }).catch((error) => {
-                                console.log(error.code)
-                                msg.channel.send(embed.gen("error", [error.code, error.msg]));
+                                if(error) {
+                                    msg.channel.send(embed.gen("error", [error.code, error.msg]));
+                                }
                             });
 
                     break;
@@ -98,7 +99,17 @@ client.on('message', msg => { // Handles all messages that the bot can see.
 
                     break;
                     case 'power':
-                        msg.channel.send("POWAH!");
+                        var signal = msg.content.replace("!"+args[0]+" "+args[1], "").trim();
+                        var options = {
+                                "signal": signal
+                        };
+                        request.post(`${config.servers[args[0]]}/power`, options)
+                        .then(function (response) {
+                            msg.channel.send(embed.gen("power", `Successfully sent signal : \`${signal}\``));
+                        }).catch((error) => {
+                            //console.log(error)
+                            msg.channel.send(embed.gen("error", [error.code, error.msg]));
+                        });
                     break;
                 }
             }
