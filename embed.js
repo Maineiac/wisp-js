@@ -10,12 +10,7 @@
 var table = require('text-table');
 var config = require('./config.js');
 
-exports.gen = function(type, response=null) {
-    if(!response) {
-        type = "catastrophic";
-    } else {
-        data = response.attributes;
-    }
+exports.gen = function(type, data=null) {
     var embed;
     switch(type) {
         case 'status':
@@ -90,9 +85,9 @@ exports.gen = function(type, response=null) {
         break;
         case 'cmd':
             embed = {
-                "description": `\`\`\`${data}\`\`\``,
+                "description": data,
                 "author": {
-                    "name": "Command Sent",
+                    "name": "All sent commander!",
                     "icon_url": config.icons.cmd
                 },
                 "color": 53611
