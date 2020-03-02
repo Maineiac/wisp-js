@@ -107,7 +107,6 @@ client.on('message', msg => { // Handles all messages that the bot can see.
                         .then(function (response) {
                             msg.channel.send(embed.gen("power", `Successfully sent signal : \`${signal}\``));
                         }).catch((error) => {
-                            //console.log(error)
                             msg.channel.send(embed.gen("error", [error.code, error.msg]));
                         });
                     break;
@@ -116,7 +115,7 @@ client.on('message', msg => { // Handles all messages that the bot can see.
         } else {
             switch(args[0]) {
                 case 'servers':
-                    msg.channel.send("We have servers, but you can't see them :)");
+                    msg.channel.send(embed.gen("servers"));
                 break;
                 case 'help':
                     msg.channel.send("This should say something");

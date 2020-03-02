@@ -108,14 +108,24 @@ exports.gen = function(type, data=null) {
             };
         break;
         case 'servers':
+            case 'servers':
+            var string = "";
+            var array = Object.entries(config.servers);
+            for (var i = 0; i < array.length; i++) {
+                string += array[i][0]+"\n";
+            }
+            if(string == "") {
+                string == "There hasn't been any servers configured";
+            }
             embed = {
-                "description": `\`\`\`${data}\`\`\``,
+                "description": string,
                 "author": {
                     "name": "Server List",
                     "icon_url": config.icons.serverlist
                 },
                 "color": 16098851
             };
+        break;
         break;
         case 'help':
             embed = {
