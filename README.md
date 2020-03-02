@@ -1,6 +1,7 @@
-# WISPY
+# WISP-JS
 
-WISPY is a discord bot for use with the [wisp.gg](https://wisp.gg) api.
+WISP-JS is a discord bot for use with the [WISP](https://wisp.gg) api [(Docs)](https://docs.panel.gg).
+
 
 ## Requirements
 
@@ -35,10 +36,9 @@ npm install
 
 In order to continue, you'll need your WISP API key and Discord bot token.
 
-[Discord Bot setup tutorial](https://discordpy.readthedocs.io/en/latest/discord.html)
-Information for getting your bot token is in step 7.
+[From the wisp docs](https://docs.panel.gg/#authentication) | You can create a new API key in the Security Controls tab which can be found on the navbar when viewing the server list in the game panel.
 
-You can create a new API key in the Security Controls tab on the left in the WISP game panel. You can also just go to https://yourhostspanelurl.gg/account/security
+[Discord Bot setup tutorial](https://discordpy.readthedocs.io/en/latest/discord.html) | Information for getting your bot token is in step 7.
 
 At this point you can rename example-config.js to config.js and follow the steps there.
 
