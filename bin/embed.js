@@ -50,6 +50,10 @@ exports.gen = function(type, data=null) {
                 color = 16098851;
                 name = "Server hasn't started";
                 t = "The server seems to be in a starting state.";
+            } else if(!Object.keys(data.query).length) {
+                color = 13632027;
+                name = "Server can't be queried.";
+                t = "This game/voice server type doesn't support queries.";
             } else {
                 name = data.query.name;
                 var timestr, name, color, t;
