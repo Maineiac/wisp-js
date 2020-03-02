@@ -19,6 +19,10 @@ exports.gen = function(type, data=null) {
                 state = "UP"
                 color = 53611;
                 name = data.query.name;
+            } else if(data.state == "starting") {
+                state = "STARTING"
+                color = 16098851;
+                name = "Server starting";
             } else {
                 state = "DOWN"
                 color = 13632027;
@@ -95,7 +99,7 @@ exports.gen = function(type, data=null) {
         break;
         case 'power':
             embed = {
-                "description": `\`\`\`${data}\`\`\``,
+                "description": data,
                 "author": {
                     "name": "Power Signal",
                     "icon_url": config.icons.power
