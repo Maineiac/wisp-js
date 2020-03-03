@@ -9,7 +9,7 @@
 
 // Declare some requirements
 const config = require('../config.js');
-const errors = require('./error.js').type;
+const errors = require('./util.js').errors;
 
 const instance = require('axios').create({
 
