@@ -24,7 +24,8 @@ const instance = require('axios').create({
 
         'Content-Type': 'application/json',
         'Accept': 'application/vnd.wisp.v1+json',
-        'Authorization': `Bearer ${config.WISPAPIKey}`
+        'Authorization': `Bearer ${config.WISPAPIKey}`,
+        'User-Agent': 'WISP-JS Discord Bot'
 
     }
 
