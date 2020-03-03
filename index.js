@@ -24,7 +24,7 @@
 
 */
 
-// Load config and dependencies.
+// Declare some requirements
 const config = require('./config.js');
 const request = require('./bin/request.js');
 const embed = require("./bin/embed.js");
@@ -86,7 +86,7 @@ client.on('message', msg => { // Start listening for messages
                         // Send a request to the api and handle it's response.
                         request.get(`${config.servers[args[0]]}/utilization`)
                             .then(function (response) { // If we got a response we send a success embed
-
+                                
                                 msg.channel.send(embed.gen(args[1], response.data.attributes));
 
                             }).catch((error) => { // Otherwise we send an error embed

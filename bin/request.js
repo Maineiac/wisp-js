@@ -6,6 +6,8 @@
     Written by Maineiac
     http://maineiac.dev
 */
+
+// Declare some requirements
 const config = require('../config.js');
 const errors = require('./error.js').type;
 
