@@ -1,3 +1,5 @@
+![WISP-JS Logo](https://img.maineiac.dev/wisp-js.png)
+
 # WISP-JS
 
 WISP-JS is a discord bot for use with the [WISP](https://wisp.gg) api [(Docs)](https://docs.panel.gg).
@@ -47,3 +49,5 @@ When finished you can run the bot with
 ```bash
 node index.js
 ```
+
+Still need help? Join the [WISP-JS Support Discord](https://discord.gg/NVPURXf)

@@ -27,12 +27,12 @@ exports.prefix = "!";
 
 // These images will appear at the top of their respective embed.
 exports.icons = {
-    status: "https://img.maineiac.dev/wisp.png",
-    players: "https://img.maineiac.dev/wisp.png",
-    cmd: "https://img.maineiac.dev/wisp.png",
-    power: "https://img.maineiac.dev/wisp.png",
-    help: "https://img.maineiac.dev/wisp.png",
-    error: "https://img.maineiac.dev/wisp.png"
+    status: "https://img.maineiac.dev/wisp-js.png",
+    players: "https://img.maineiac.dev/wisp-js.png",
+    cmd: "https://img.maineiac.dev/wisp-js.png",
+    power: "https://img.maineiac.dev/wisp-js.png",
+    help: "https://img.maineiac.dev/wisp-js.png",
+    error: "https://img.maineiac.dev/wisp-js.png"
 }
 
 // Command permissions
