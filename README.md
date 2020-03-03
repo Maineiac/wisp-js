@@ -1,4 +1,4 @@
-![WISP-JS Logo](https://img.maineiac.dev/wisp-js.png)
+![WISP-JS Logo](https://img.maineiac.dev/wisp-js-small.png)
 
 # WISP-JS
 
