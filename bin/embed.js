@@ -29,11 +29,21 @@ exports.gen = function(type, data=null) {
             // https://docs.panel.gg/#stats
 
             // First we hande the data
-            var name, color;
+            var name, color, array, t;
 
             if(data.state == "on") {
                 color = 53611;
                 name = data.query.name;
+                
+                // The server is running, lets put resource usage in a table.
+                array = [   
+                    ["Status", data.state.toUpperCase()],
+                    ["Memory", data.memory.current+'/'+data.memory.limit],
+                    ["CPU", data.cpu.current+'/'+data.cpu.limit],
+                    ["Disk", data.disk.current+'/'+data.disk.limit],
+                    ["Players", data.players.current+'/'+data.players.limit]
+                ];
+                t = table(array, { align: [ 'l', 'r' ], hsep: [ '  |  ' ] });
 
             } else if(data.state == "starting") {
                 color = 16098851;
@@ -45,14 +55,12 @@ exports.gen = function(type, data=null) {
 
             }
 
-            var state = data.state.toUpperCase();
-
-            // Then we plug it into our embed
+            // and plug it all into our embed
             embed.setTitle(name)
             .setAuthor("Status checker", config.icons.status)
             .setColor(color)
-            .setDescription(`\`\`\`Status : ${state}\nMemory : ${data.memory.current}/${data.memory.limit}\nCPU : ${Math.floor(data.cpu.current)}/${data.cpu.limit}\nDisk : ${data.disk.current}/${data.disk.limit}\nPlayers : ${data.players.current}/${data.players.limit}\`\`\``)
-            .setTimestamp();
+            .setTimestamp()
+            if(t) { embed.setDescription(`\`\`\`${t}\`\`\``) };
 
         break;
 
