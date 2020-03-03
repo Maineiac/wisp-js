@@ -165,7 +165,7 @@ client.on('message', msg => { // Start listening for messages
                 break;
 
                 default: // Same as the default case above.
-                    msg.channel.send("I had a big problem, this shouldn't happen. | 02");
+                    msg.channel.send(`Invalid server alias or base command : \`${args[0]}\``);
                 break;
                 
             }
