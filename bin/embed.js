@@ -10,36 +10,33 @@
     This is a big mess, I'm aware.
 */
 
-var table = require('text-table');
-var config = require('../config.js');
+const table = require('text-table');
+const config = require('../config.js');
+const util = require('./util.js')
+const Discord = require('discord.js');
 
 exports.gen = function(type, data=null) {
-    var embed;
+    //var embed;
+    const embed = new Discord.RichEmbed()
     switch(type) {
         case 'status':
-            var name, state, color;
+            var name, color;
             if(data.state == "on") {
-                state = "UP"
                 color = 53611;
                 name = data.query.name;
             } else if(data.state == "starting") {
-                state = "STARTING"
                 color = 16098851;
                 name = "Server starting";
             } else {
-                state = "DOWN"
                 color = 13632027;
                 name = "Server offline";
             }
-            embed = {
-                "title": name,
-                "description": `\`\`\`Status : ${state}\nMemory : ${data.memory.current}/${data.memory.limit}\nCPU : ${Math.floor(data.cpu.current)}/${data.cpu.limit}\nDisk : ${data.disk.current}/${data.disk.limit}\nPlayers : ${data.players.current}/${data.players.limit}\`\`\``,
-                "author": {
-                    "name": "Status checker",
-                    "icon_url": config.icons.status
-                },
-                "color": color
-            };
+            var state = data.state.toUpperCase();
+            embed.setTitle(name)
+            .setAuthor("Status checker", config.icons.status)
+            .setColor(color)
+            .setDescription(`\`\`\`Status : ${state}\nMemory : ${data.memory.current}/${data.memory.limit}\nCPU : ${Math.floor(data.cpu.current)}/${data.cpu.limit}\nDisk : ${data.disk.current}/${data.disk.limit}\nPlayers : ${data.players.current}/${data.players.limit}\`\`\``)
+            .setTimestamp()
         break;
         case 'players':
             var color = 13632027;
@@ -56,67 +53,40 @@ exports.gen = function(type, data=null) {
                 t = "This game/voice server type doesn't support queries.";
             } else {
                 name = data.query.name;
-                var timestr, name, color, t;
+                var name, color, t;
                 var array = [['Name', 'Score', 'Time']];
                 var players = data.query.players.concat(data.query.bots);
                 color = 53611;
                 for (var i = 0; i < players.length; i++) {
-                    var r,s;
-                    var time = Math.floor(players[i].time);
-                    var timestr = `${time}s`;
-                    if (time >= 60) {
-                      r = time%60;
-                      time = Math.floor(time / 60);
-                      timestr = `${time}m ${r}s`;
-                    }
-                    if (time >= 60) {
-                      s = r;
-                      r = time%60;
-                      time = Math.floor(time / 60);
-                      timestr = `${time}h ${r}m ${s}s`;
-                    }
 
                     array[i+1] = [  players[i].name, 
                                     players[i].score, 
-                                    timestr
+                                    util.formatTime(players[i].time)
                                 ];
                 }
                 if(!array[1]) {
                     t = "There are no players currently on the server.";
                 } else {
-                    console.log(array)
                     t = table(array, { align: [ 'l', 'c', 'c' ], hsep: [ '    ' ] });
                 }
             }
-            embed = {
-                "title": name,
-                "description": `\`\`\`${t}\`\`\``,
-                "author": {
-                    "name": "Player List",
-                    "icon_url": config.icons.players
-                },
-                "color": color
-            };
+            embed.setTitle(name)
+            .setAuthor("Player List", config.icons.players)
+            .setColor(color)
+            .setDescription(`\`\`\`${t}\`\`\``)
+            .setTimestamp()
         break;
         case 'cmd':
-            embed = {
-                "description": data,
-                "author": {
-                    "name": "All sent commander!",
-                    "icon_url": config.icons.cmd
-                },
-                "color": 53611
-            };
+            embed.setAuthor("All sent commander!", config.icons.cmd)
+            .setColor(53611)
+            .setDescription(data)
+            .setTimestamp()
         break;
         case 'power':
-            embed = {
-                "description": data,
-                "author": {
-                    "name": "Power Signal",
-                    "icon_url": config.icons.power
-                },
-                "color": 53611
-            };
+            embed.setAuthor("Power Signal", config.icons.power)
+            .setColor(53611)
+            .setDescription(data)
+            .setTimestamp()
         break;
         case 'servers':
             case 'servers':
@@ -128,46 +98,34 @@ exports.gen = function(type, data=null) {
             if(string == "") {
                 string == "There hasn't been any servers configured";
             }
-            embed = {
-                "description": string,
-                "author": {
-                    "name": "Server List",
-                    "icon_url": config.icons.serverlist
-                },
-                "color": 16098851
-            };
+            embed.setAuthor("Server List", config.icons.serverlist)
+            .setColor(16098851)
+            .setDescription(string)
+            .setTimestamp()
         break;
         break;
         case 'help':
-            embed = {
-                "description": "**Base commands**\n```"+
-                config.prefix+"help | You're looking at it.\n"+
-                config.prefix+"servers | Get a list of the available servers.```\n"+
-                "**Server commands**\n These are performed with the command being the alias"+
-                " for the server it's being addressed to. Here is the format for server commands : \n`"+
-                config.prefix+"alias [command] <arguments>`\n```"+
-                config.prefix+"alias [status] | Get the state and usage.\n"+
-                config.prefix+"alias [players] | Get a list of current players.\n"+
-                config.prefix+"alias [power] <signal> | Send power signal.\n"+
-                config.prefix+"alias [cmd] <command> | Send command to console.```",
-                "author": {
-                    "name": "Help",
-                    "icon_url": config.icons.help
-                },
-                "color": 16098851
-            };
+            embed.setAuthor("Help", config.icons.help)
+            .setColor(16098851)
+            .setDescription("**Base commands**\n```"+
+            config.prefix+"help | You're looking at it.\n"+
+            config.prefix+"servers | Get a list of the available servers.```\n"+
+            "**Server commands**\n These are performed with the command being the alias"+
+            " for the server it's being addressed to. Here is the format for server commands : \n`"+
+            config.prefix+"alias [command] <arguments>`\n```"+
+            config.prefix+"alias [status] | Get the state and usage.\n"+
+            config.prefix+"alias [players] | Get a list of current players.\n"+
+            config.prefix+"alias [power] <signal> | Send power signal.\n"+
+            config.prefix+"alias [cmd] <command> | Send command to console.```",)
+            .setTimestamp();
         break;
         case 'error':
-            embed = {
-                "title": data[0],
-                "description": data[1],
-                "author": {
-                    "name": "Error!",
-                    "icon_url": config.icons.error
-                },
-                "color": 13632027
-            };
+            embed.setTitle(data[0])
+            .setAuthor("Error", config.icons.error)
+            .setColor(13632027)
+            .setDescription(data[1])
+            .setTimestamp()
         break;
     }
-    return {embed};
+    return {embed}
 }
