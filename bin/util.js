@@ -70,7 +70,7 @@ exports.errors = {
     ],
     504: [
         '504 DaemonConnectionException', 
-        'The daemon isn\'t responding.'
+        'The daemon isn\'t responding. This can happen if a server has been suspended/unpaid.'
     ],
     ECONNABORTED: [
         'Timed out', 
