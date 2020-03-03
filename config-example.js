@@ -1,18 +1,32 @@
+/* 
+    Welcome to the WISP-JS configuration file.
+
+    I have tried to comment everything in
+            great detail for you.
+    Please take the time to read through
+           before asking for help.            */
+
 // Authentication
 
 // You can create your API key here : https://your.panel.gg/account/security
 // All users (clients/support ops/admins) can create these.
-exports.WISPAPIKey = "YOURAPIKEYHERE";
+exports.WISPAPIKey = "YOURAPIKEYHERE"; // Your api key
 
 // If you don't know anything about making a bot, it's easy.
 // Follow this tutorial : https://discordpy.readthedocs.io/en/latest/discord.html
 // You'll find this key in step 7.
 exports.BotToken = "YOURBOTTOKENHERE"; // Your bot token.
+
+// This is your host's panel url.
 exports.PanelURL = "https://your.panel.gg/";
 
 // User stuff
-exports.prefix = "!"; // This will start every command.
-exports.icons = { // These images will appear at the top of their respective embed.
+
+// This will start every command.
+exports.prefix = "!";
+
+// These images will appear at the top of their respective embed.
+exports.icons = {
     status: "https://img.maineiac.dev/wisp.png",
     players: "https://img.maineiac.dev/wisp.png",
     cmd: "https://img.maineiac.dev/wisp.png",
@@ -22,12 +36,20 @@ exports.icons = { // These images will appear at the top of their respective emb
 }
 
 // Command permissions
-exports.permissions = { //
+// This will only work with role ids. You can get these by doing the following :
+// Ensure you're in developer mode, if not go to User Settings>Appearance>Advanced,
+// and hit the button for Developer Mode.
+// Then go to Your Server>Server Settings>Roles and right click the role you'd
+// like to copy.
+exports.permissions = {
     status: ['*'], // * = No permissions required
     players: ['*'],
     cmd: ['roleid', 'roleid'], // If you need to, keep adding roles.
     power: ['roleid']
+    // Don't try to add more commands unless you know what you're doing.
+    // You'll break stuff.
 }
+
 
 /* Server id aliases
 
