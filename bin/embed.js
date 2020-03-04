@@ -30,7 +30,7 @@ exports.gen = function(type, data=null) {
 
             // First we hande the data
             var name, color, array, t;
-
+            
             if(data.state == "on") {
                 color = 53611;
                 name = data.query.name;
@@ -39,11 +39,11 @@ exports.gen = function(type, data=null) {
                 array = [   
                     ["Status", data.state.toUpperCase()],
                     ["Memory", data.memory.current+'/'+data.memory.limit],
-                    ["CPU", data.cpu.current+'/'+data.cpu.limit],
+                    ["CPU", Math.floor(data.cpu.current)+'/'+data.cpu.limit],
                     ["Disk", data.disk.current+'/'+data.disk.limit],
                     ["Players", data.players.current+'/'+data.players.limit]
                 ];
-                t = table(array, { align: [ 'l', 'r' ], hsep: [ '  |  ' ] });
+                t = table(array, { align: [ 'c', 'c' ], hsep: [ '     ' ] });
 
             } else if(data.state == "starting") {
                 color = 16098851;
