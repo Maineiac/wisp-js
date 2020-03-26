@@ -45,11 +45,17 @@ exports.icons = {
 // and hit the button for Developer Mode.
 // Then go to Your Server>Server Settings>Roles and right click the role you'd
 // like to copy.
+
+// Note : You can disable any of these commands by entering no values.
+// By default, power and cmd have the value 'roleid' therefore,
+// they will not work for any user, including yourself.
+// This is the same as having no values at all, ie : power: []
+
 exports.permissions = {
     status: ['*'], // * = No permissions required
     players: ['*'],
-    cmd: ['*'], // If you need to, keep adding roles.
-    power: ['*']
+    cmd: ['roleid', 'roleid2'], // If you need to, keep adding roles.
+    power: ['roleid']
     // Don't try to add more commands unless you know what you're doing.
     // You'll break stuff.
 }
@@ -86,5 +92,4 @@ exports.servers = { // This supports more servers, just keep adding.
 
 // At the time of this commit (March 25, 2020) error catching for this is trash
 // You'll probably have problems setting this up. Free free to contact
-// Maineiac#0001 for help. Instead of DM's, just join 
-// this server : https://discord.gg/cJqZS8M
+// Maineiac#0001 @ https://discord.gg/cJqZS8M
