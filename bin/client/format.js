@@ -7,6 +7,8 @@ exports.ServerStatus = async function(response) {
     if(data.state == "on") {
         obj.color = 53611;
         obj.name = data.query.name;
+
+        let maxplayers = data.query.maxplayers || "??";
         
         // The server is running, lets put resource usage in a table.
         array = [   
@@ -14,7 +16,7 @@ exports.ServerStatus = async function(response) {
             ["Memory", data.memory.current+'/'+data.memory.limit],
             ["CPU", Math.floor(data.cpu.current)+'/'+data.cpu.limit],
             ["Disk", data.disk.current+'/'+data.disk.limit],
-            ["Players", data.players.current+'/'+data.query.maxplayers]
+            ["Players", data.players.current+'/'+maxplayers]
         ];
         obj.desc = '```'+table(array, { align: [ 'r', 'l' ], hsep: [ '   ' ] })+'```';
 
