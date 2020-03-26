@@ -1,5 +1,5 @@
 const config = require('../config.js');
-const listener = require('./listener.js')
+const listener = require('./listener.js');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 

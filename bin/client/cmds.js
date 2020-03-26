@@ -8,7 +8,7 @@ const instance = require('axios').create({
             https://docs.panel.gg/#introduction
         This configures axios one time to use the information to make requests.
     */
-    baseURL: `${config.PanelURL}api/client/server/`,
+    baseURL: `${config.PanelURL}api/client/servers/`,
     timeout: 5000,
     headers: {
 
@@ -27,7 +27,7 @@ exports.listener = async function(args) { // Expects args to be Array()
         switch(args[1]) {
             case 'status': case 'players':
                 const response = await instance.get(`${config.servers[args[0]]}/utilization`);
-                result = await embed(args[1], response)
+                result = await embed(args[1], response);
                 return result;
             break;
             case 'cmd': case 'power':
