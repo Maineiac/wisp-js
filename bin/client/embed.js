@@ -1,17 +1,17 @@
 const Discord = require("discord.js");
 const config = require('../../config.js');
-const func = require('./func.js');
-module.exports = async function(type, data) {
+const format = require('./format.js');
+module.exports = async function(type, data=null) {
     const embed = new Discord.MessageEmbed();
     let prop = {};
     switch(type) {
         case 'status':
-            prop = await func.formatServerStatus(data);
+            prop = await format.ServerStatus(data);
             embed.setAuthor("Server Status", config.icons.status)
         break;
         
         case 'players':
-            prop = await func.formatPlayerList(data);
+            prop = await format.PlayerList(data);
             embed.setAuthor("Player List", config.icons.players)
         break;
 

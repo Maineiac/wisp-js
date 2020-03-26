@@ -1,5 +1,5 @@
 const table = require('text-table');
-exports.formatServerStatus = async function(response) {
+exports.ServerStatus = async function(response) {
     const data = response.data.attributes;
     let obj = {};
     let array = [];
@@ -29,7 +29,7 @@ exports.formatServerStatus = async function(response) {
     //console.log(obj)
     return obj;
 }
-exports.formatPlayerList = async function(response) {
+exports.PlayerList = async function(response) {
     const data = response.data.attributes;
     let obj = {color: 13632027}
 
@@ -55,7 +55,7 @@ exports.formatPlayerList = async function(response) {
             // Each player is stored as an array inside of array array[playerindex]
             array[i+1] = [  players[i].name, 
                             players[i].score, 
-                            util.formatTime(players[i].time)
+                            util.Time(players[i].time)
                         ];
 
         }
@@ -69,14 +69,14 @@ exports.formatPlayerList = async function(response) {
     }
     return obj;
 }
-exports.formatCommand = async function(data) {
+exports.Command = async function(data) {
     let obj = {
         name: "Success",
         color:  53611,
         desc:  "Sent command : `"+data+"`"
     }
 }
-exports.formatPower = async function(data) {
+exports.Power = async function(data) {
     let obj = {
         name: "Success",
         color:  53611,
