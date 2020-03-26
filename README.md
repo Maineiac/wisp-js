@@ -50,4 +50,4 @@ When finished you can run the bot with
 node index.js
 ```
 
-Still need help? Join the [WISP-JS Support Discord](https://discord.gg/NVPURXf)
+Still need help? Join the [WISP-JS Support Discord](https://discord.gg/cJqZS8M)
