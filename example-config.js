@@ -5,14 +5,15 @@
     Please take the time to read through
            before asking for help.            */
 
-// Authentication
+        /*------------------*\
+       |--- Authentication ---|
+        \*------------------*/
 
 // You can create your API key here : https://your.panel.gg/account/security
-// All userIt's only 4 months later than the expected release. s (clients/support ops/admins) can create these.
+// All users (clients/support ops/admins) can create these.
 exports.WISPAPIKey = "YOURAPIKEY"; // Your api key
-exports.ACPKey = "YOURACPKEY";
 
-// If you don't know anything about making a bot, it's easy.
+// If you don't know anything about making a bot dont worry, it's easy.
 // Follow this tutorial : https://discordpy.readthedocs.io/en/latest/discord.html
 // You'll find this key in step 7.
 exports.BotToken = "YOURBOTTOKEN"; // Your bot token.
@@ -20,7 +21,9 @@ exports.BotToken = "YOURBOTTOKEN"; // Your bot token.
 // This is your host's panel url.
 exports.PanelURL = "https://your.panel.gg/";
 
-// User stuff
+        /*------------------*\
+       |-- Front End Config --|
+        \*------------------*/
 
 // This will start every command.
 exports.prefix = "!";
@@ -80,3 +83,8 @@ exports.servers = { // This supports more servers, just keep adding.
 
 // If you receive an error, look at it before creating an issue. 
 // If it mentions this file it's your fault.
+
+// At the time of this commit (March 25, 2020) error catching for this is trash
+// You'll probably have problems setting this up. Free free to contact
+// Maineiac#0001 for help. Instead of DM's, just join 
+// this server : https://discord.gg/cJqZS8M
