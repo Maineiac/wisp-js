@@ -52,4 +52,7 @@ When finished you can run the bot with
 node index.js
 ```
 
+
+This can be used with any host but [Callum @ SyteSpace](https://sytespace.net/) made a great tutorial on setting it up [here](https://wiki.sytespace.net/general/wisp-js)
+
 Still need help? Join the [WISP-JS Support Discord](https://discord.gg/cJqZS8M)
