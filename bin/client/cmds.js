@@ -51,8 +51,8 @@ exports.listener = async function(args) { // Expects args to be Array()
             }
         } else {
             switch(args[0]) {
-                case 'servers':
-                    result = await embed("servers");
+                case 'servers': case 'help':
+                    result = await embed(args[0]);
                     return result;
                 break;
                 default:

@@ -33,6 +33,11 @@ module.exports = async function(type, data=null) {
             prop = await format.ServerList(config.servers);
             embed.setAuthor("Server List", config.icons.serverlist);
         break;
+
+        case 'help':
+            prop = await format.ClientHelp(config.prefix);
+            embed.setAuthor("Server List", config.icons.help);
+        break;
     }
     embed.setTitle(prop.name)
     .setColor(prop.color)
