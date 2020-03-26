@@ -1,5 +1,5 @@
 const config = require('../../config.js');
-const embed = require('../embeds/servers.js');
+const embed = require('./embed.js');
 
 const instance = require('axios').create({
 
@@ -24,27 +24,38 @@ const instance = require('axios').create({
 exports.listener = async function(args) { // Expects args to be Array()
     try {
         let result;
-        switch(args[1]) {
-            case 'status': case 'players':
-                const response = await instance.get(`${config.servers[args[0]]}/utilization`);
-                result = await embed(args[1], response);
-                return result;
-            break;
-            case 'cmd': case 'power':
-                let type = "command"
-                let signal = type;
-                let data = args.slice(2,args.length).join(" ");
-                if(args[1] == "power") {
-                    type = args[1];
-                    signal = "signal";
-                }
-                await instance.post(
-                    `${config.servers[args[0]]}/${type}`, 
-                    {[signal]: data}
-                );
-                result = await embed(args[1], data)
-                return result;
-            break;
+        if(config.servers.hasOwnProperty(args[0])) {
+            switch(args[1]) {
+                case 'status': case 'players':
+                    const response = await instance.get(
+                        `${config.servers[args[0]]}/utilization`
+                    );
+                    result = await embed(args[1], response);
+                    return result;
+                break;
+                case 'cmd': case 'power':
+                    let type = "command"
+                    let signal = type;
+                    let data = args.slice(2,args.length).join(" ");
+                    if(args[1] == "power") {
+                        type = args[1];
+                        signal = "signal";
+                    }
+                    await instance.post(
+                        `${config.servers[args[0]]}/${type}`, 
+                        {[signal]: data}
+                    );
+                    result = await embed(args[1], data)
+                    return result;
+                break;
+            }
+        } else {
+            switch(args[0]) {
+                default:
+                    result = "Invalid command?";
+                    return result;
+                break;
+            }
         }
     } catch(error) {
         console.log(error);
