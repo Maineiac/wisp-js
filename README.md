@@ -9,6 +9,8 @@ WISP-JS is a discord bot for use with the [WISP](https://wisp.gg) api [(Docs)](h
 
 * A server with a host that uses the WISP Panel
 * A server that you can install Node.js on, and host this
+* Node.js 12.*.* +
+* discord.js 12.*.* +
 * At least enough programming knowledge to edit a configuration file.
 
 ## Features <sup><sub>Note: Some commands may not work with certain server types.</sub></sup>
