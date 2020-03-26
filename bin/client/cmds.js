@@ -51,6 +51,10 @@ exports.listener = async function(args) { // Expects args to be Array()
             }
         } else {
             switch(args[0]) {
+                case 'servers':
+                    result = await embed("servers");
+                    return result;
+                break;
                 default:
                     result = "Invalid command?";
                     return result;

@@ -69,7 +69,7 @@ exports.PlayerList = async function(response) {
     }
     return obj;
 }
-exports.Command = async function(data) {
+/*exports.Command = async function(data) {
     let obj = {
         name: "Success",
         color:  53611,
@@ -82,4 +82,26 @@ exports.Power = async function(data) {
         color:  53611,
         desc:  "Sent command : `"+data+"`"
     }
+}*/
+
+exports.ServerList = async function(data) {
+    var string = "";
+    var array = Object.entries(data);
+
+    for (var i = 0; i < array.length; i++) {
+        string += array[i][0]+"\n"; // This does the trick
+
+    }
+
+    if(string == "") { // In-case you forgot to configure any servers.
+        string == "There hasn't been any servers configured";
+
+    }
+
+    let obj = {
+        name: "Server List",
+        color:  16751104,
+        desc:  "This is a list of all configured servers\n```"+string+"```"
+    }
+    return obj;
 }

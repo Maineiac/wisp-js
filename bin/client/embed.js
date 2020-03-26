@@ -28,6 +28,11 @@ module.exports = async function(type, data=null) {
             prop.desc = "Sent signal : `"+data+"`";
             embed.setAuthor("Remote Control", config.icons.power);
         break;
+
+        case 'servers':
+            prop = await format.ServerList(config.servers);
+            embed.setAuthor("Server List", config.icons.serverlist);
+        break;
     }
     embed.setTitle(prop.name)
     .setColor(prop.color)
