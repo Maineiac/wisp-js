@@ -8,6 +8,10 @@ const client = new Discord.Client();
 
 client.on('ready', () => { // Called when the bot is "ready"
     console.log(`Logged in as ${client.user.tag}!`);
+    client.user.setStatus('available')
+    client.user.setPresence({
+        activity: config.activity
+    });
 });
 
 client.on('message', msg => { // Start listening for messages
