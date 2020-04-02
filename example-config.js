@@ -170,6 +170,8 @@ exports.embeds = {
     }
 }
 
+exports.debug = false;
+
 // If you receive an error, look at it before creating an issue. 
 // If it mentions this file it's your fault.
 

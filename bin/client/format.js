@@ -8,10 +8,10 @@ exports.ServerStatus = async function(response) {
     if(data.state == "on") {
         obj.color = config.embeds.status.color.running;
         obj.name = data.query.name;
-
-        let maxplayers = data.query.maxplayers || "??";
-        let curplayers = data.query.raw.numplayers || data.players.current;
         
+        let curplayers = data.players.current;
+        let maxplayers = data.query.maxplayers || "??";
+        if (data.query.raw) {curplayers = data.query.raw.numplayers}
         // The server is running, lets put resource usage in a table.
         array = [   
             ["Status", data.state.toUpperCase()],
@@ -21,7 +21,7 @@ exports.ServerStatus = async function(response) {
             ["Players", curplayers+'/'+maxplayers]
         ];
         if(maxplayers == "" || !data.query) {
-            console.log(data);
+            if(config.debug) { console.log(data); }
         }
         obj.desc = '```'+table(array, { align: [ 'r', 'l' ], hsep: [ '   ' ] })+'```';
 
@@ -65,7 +65,7 @@ exports.PlayerList = async function(response) {
         obj.name = "Server starting";
 
     } else if(!Object.keys(data.query).length) {
-        console.log(data);
+        if(config.debug) { console.log(data); }
         obj.name = "Server can't be queried."; // Sadly I can't do anything about this :pepecry:
         obj.desc = "This game/voice server type doesn't support queries.";
 
