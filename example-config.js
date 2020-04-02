@@ -92,4 +92,4 @@ exports.servers = { // This supports more servers, just keep adding.
 
 // At the time of this commit (March 25, 2020) error catching for this is trash
 // You'll probably have problems setting this up. Free free to contact
-// Maineiac#0001 @ https://discord.gg/cJqZS8M
+// Maineiac#0001 @ https://discord.gg/myJKx9t
