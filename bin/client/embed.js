@@ -41,7 +41,8 @@ module.exports = async function(type, data=null) {
     }
     embed.setTitle(prop.name)
     .setColor(prop.color)
-    .setTimestamp();
+    .setTimestamp()
+    .setFooter(config.embeds.footer.text, config.embeds.footer.icon);
     if (prop.desc) { embed.setDescription(prop.desc) }
     return {embed};
 }

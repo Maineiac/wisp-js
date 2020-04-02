@@ -167,6 +167,10 @@ exports.embeds = {
         icon: "https://img.maineiac.dev/wjs_icons/ico_error.png",
         color: 13632027,
         title: "Error!"
+    },
+    footer: {   // This will be at the bottom of every embed
+        icon: "https://img.maineiac.dev/wjs_icons/ico_footer.png",
+        text: "WISP-JS | Maineiac#0001"
     }
 }
 
