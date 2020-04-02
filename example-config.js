@@ -170,6 +170,9 @@ exports.embeds = {
     }
 }
 
+// This will print things to console when there are problems.
+// If you contact Maineiac it's likely you'll be told to
+// set this to true
 exports.debug = false;
 
 // If you receive an error, look at it before creating an issue. 
