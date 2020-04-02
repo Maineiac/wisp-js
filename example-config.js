@@ -36,7 +36,7 @@ exports.icons = {
     power: "https://img.maineiac.dev/wjs_icons/ico_power.png",
     help: "https://img.maineiac.dev/wjs_icons/ico_help.png",
     error: "https://img.maineiac.dev/wjs_icons/ico_error.png",
-    serverlist: "https://img.maineiac.dev/wjs_icons/ico_servers.png",
+    serverlist: "https://img.maineiac.dev/wjs_icons/ico_servers.png"
 }
 
 // Command permissions
