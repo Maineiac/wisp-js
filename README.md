@@ -2,13 +2,16 @@
 
 # WISP-JS
 
-WISP-JS is a discord bot for use with the [WISP](https://wisp.gg) api [(Docs)](https://docs.panel.gg). There are planned features for interaction with the ACP API (Pterodactyl API), this readme will be updated when that's a reality.
+WISP-JS is a discord bot for use with the [WISP](https://wisp.gg) api [(Docs)](https://docs.panel.gg). 
+
+## <sub>Currently only for the Client API.</sub><sup><sub>ACP soon<sup><sub>tm</sub></sup></sub></sup>
+There are planned features for interaction with the ACP API (Pterodactyl API), this readme will be updated when that's a reality.
 
 
 ## Requirements
 
-* A server with a host that uses the WISP Panel
-* A server that you can install Node.js on, and host this
+* One or more servers with a host that uses the WISP Panel
+* Any server that you can install Node.js on, and host this
 * Node.js 12+
 * discord.js 12+
 * At least enough programming knowledge to edit a configuration file.
