@@ -6,7 +6,7 @@ module.exports = async function(msg) {
             let args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
             let result;
             result = await require('./client/cmds.js').listener(args);
-            if(!result) { result = "Hey, buddy, something went wrong, but there was no error." }
+            if(!result) { result = "There was an error communicating with the server. Please check your config." }
             msg.channel.send(result);
         } catch(error) {
             console.log(error);
