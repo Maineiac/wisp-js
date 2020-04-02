@@ -88,7 +88,7 @@ exports.ServerList = async function(data) {
     let obj = {
         name: "Server List",
         color:  16751104,
-        desc:  "This is a list of all configured servers\n```"+string+"```"
+        desc:  "This is a list of all configured servers\n```\n"+string+"```"
     }
     return obj;
 }
