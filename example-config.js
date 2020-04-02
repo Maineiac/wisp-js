@@ -1,9 +1,35 @@
-/* 
-    Welcome to the WISP-JS configuration file.
-    I have tried to comment everything in
-            great detail for you.
-    Please take the time to read through
-           before asking for help.            */
+/*                                                  
+    db   d8b   db d888888b .d8888. d8888b.           d88b .d8888. 
+    88   I8I   88   `88'   88'  YP 88  `8D           `8P' 88'  YP 
+    88   I8I   88    88    `8bo.   88oodD'            88  `8bo.   
+    Y8   I8I   88    88      `Y8b. 88~~~   C8888D     88    `Y8b. 
+    `8b d8'8b d8'   .88.   db   8D 88             db. 88  db   8D 
+     `8b8' `8d8'  Y888888P `8888Y' 88             Y8888P  `8888Y' 
+
+                A discord bot for use with the WISP API 
+                    https://wisp.gg/
+
+                WISP Documentation
+                    https://docs.panel.gg/
+
+                GitHub Repo/Readme
+                    https://github.com/Maineiac/wisp-js
+
+                Written by Maineiac
+                    https://maineiac.dev
+
+                Welcome to the WISP-JS configuration file.
+                I have tried to comment everything in
+                        great detail for you.
+                Please take the time to read through
+                    before asking for help.            
+
+    If you receive an error, look at it before creating an issue. 
+    If it mentions this file it's your fault.
+
+    At the time of this commit (April 2, 2020) error catching for this is trash
+    You'll probably have problems setting this up. Free free to contact
+    Maineiac#0001 @ https://discord.gg/myJKx9t
 
         /*------------------*\
        |--- Authentication ---|
@@ -22,23 +48,8 @@ exports.BotToken = "YOURBOTTOKEN"; // Your bot token.
 exports.PanelURL = "https://your.panel.gg/";
 
         /*------------------*\
-       |-- Front End Config --|
+       |--- Backend Config ---|
         \*------------------*/
-
-// This will start every command.
-exports.prefix = "!";
-
-// These images will appear at the top of their respective embed.
-exports.icons = {
-    status: "https://img.maineiac.dev/wjs_icons/ico_status.png",
-    players: "https://img.maineiac.dev/wjs_icons/ico_players.png",
-    cmd: "https://img.maineiac.dev/wjs_icons/ico_command.png",
-    power: "https://img.maineiac.dev/wjs_icons/ico_power.png",
-    help: "https://img.maineiac.dev/wjs_icons/ico_help.png",
-    error: "https://img.maineiac.dev/wjs_icons/ico_error.png",
-    serverlist: "https://img.maineiac.dev/wjs_icons/ico_servers.png"
-}
-
 // Command permissions
 // This will only work with role ids. You can get these by doing the following :
 // Ensure you're in developer mode, if not go to User Settings>Appearance>Advanced,
@@ -85,11 +96,83 @@ exports.servers = { // This supports more servers, just keep adding.
     anotherserveralias: "anotherid",     // !anotherserveralias [command]
     thesecanbeanything: "yougetit"     // !thesecanbeanything [command]
     //HINT : REMEMBER THE COMMA
-};
+}
+
+        /*------------------*\
+       |-- Frontend Config ---|
+        \*------------------*/
+
+// This will start every command.
+exports.prefix = "!";
+
+// This one changes the bot's activity "Playing somegame"
+
+exports.activity = {
+    name: 'for '+this.prefix+"help", // This value can say whatever you want.
+    type: "WATCHING", // This should be one of the following, PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS
+    url: "https://maineiac.dev/" // This will have an affect on some types.
+}
+
+// IF YOU DON'T KNOW WHAT YOU'RE DOING, DON'T BOTHER CONTINUING.
+// This next objects holds all the current configuration for embeds
+// You can modify any color, icon, or title (author)
+// Things are labeled pretty well I think,
+// i shouldn't need to comment every line following.
+exports.embeds = {
+    status: {
+        icon: "https://img.maineiac.dev/wjs_icons/ico_status.png",
+        color:{
+            running: 53611,
+            starting: 16098851,
+            stopped: 13632027
+        },
+        title: "Server Status"
+    },
+    players: {
+        icon: "https://img.maineiac.dev/wjs_icons/ico_players.png",
+        color: {
+            running: 53611,
+            starting: 16098851,
+            stopped: 13632027
+        },
+        title: "Player List"
+    },
+    cmd: {
+        icon: "https://img.maineiac.dev/wjs_icons/ico_command.png",
+        color: {
+            success: 53611,
+            failure: 13632027
+        },
+        title: "Remote Command"
+    },
+    power: {
+        icon: "https://img.maineiac.dev/wjs_icons/ico_power.png",
+        color: {
+            success: 53611,
+            failure: 13632027
+        },
+        title: "Remote Signal"
+    },
+    help: {
+        icon: "https://img.maineiac.dev/wjs_icons/ico_help.png",
+        color: 16751104,
+        title: "Help Menu"
+    },
+    serverlist: {
+        icon: "https://img.maineiac.dev/wjs_icons/ico_servers.png",
+        color: 16751104,
+        title: "Server List"
+    },
+    error: {
+        icon: "https://img.maineiac.dev/wjs_icons/ico_error.png",
+        color: 13632027,
+        title: "Error!"
+    }
+}
 
 // If you receive an error, look at it before creating an issue. 
 // If it mentions this file it's your fault.
 
-// At the time of this commit (March 25, 2020) error catching for this is trash
+// At the time of this commit (April 2, 2020) error catching for this is trash
 // You'll probably have problems setting this up. Free free to contact
 // Maineiac#0001 @ https://discord.gg/myJKx9t
