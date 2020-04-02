@@ -1,14 +1,16 @@
 const table = require('text-table');
+const config = require('../../config.js');
 exports.ServerStatus = async function(response) {
     const data = response.data.attributes;
     let obj = {};
     let array = [];
     
     if(data.state == "on") {
-        obj.color = 53611;
+        obj.color = config.embeds.status.color.running;
         obj.name = data.query.name;
 
         let maxplayers = data.query.maxplayers || "??";
+        let curplayers = data.query.raw.numplayers || data.players.current;
         
         // The server is running, lets put resource usage in a table.
         array = [   
@@ -16,33 +18,54 @@ exports.ServerStatus = async function(response) {
             ["Memory", data.memory.current+'/'+data.memory.limit],
             ["CPU", Math.floor(data.cpu.current)+'/'+data.cpu.limit],
             ["Disk", data.disk.current+'/'+data.disk.limit],
-            ["Players", data.players.current+'/'+maxplayers]
+            ["Players", curplayers+'/'+maxplayers]
         ];
+        if(maxplayers == "" || !data.query) {
+            console.log(data);
+        }
         obj.desc = '```'+table(array, { align: [ 'r', 'l' ], hsep: [ '   ' ] })+'```';
 
     } else if(data.state == "starting") {
-        obj.color = 16098851;
+        obj.color = config.embeds.status.color.starting;
         obj.name = "Server starting";
 
     } else {
-        obj.color = 13632027;
+        obj.color = config.embeds.status.color.stopped;
         obj.name = "Server offline";
     }
     //console.log(obj)
     return obj;
 }
+function formatTime(seconds) {
+    var r,s;
+    var time = Math.floor(seconds);
+    var timestr = `${time}s`;
+    if (time >= 60) {
+      r = time%60;
+      time = Math.floor(time / 60);
+      timestr = `${time}m ${r}s`;
+    }
+    if (time >= 60) {
+      s = r;
+      r = time%60;
+      time = Math.floor(time / 60);
+      timestr = `${time}h ${r}m ${s}s`;
+    }
+    return timestr;
+}
 exports.PlayerList = async function(response) {
     const data = response.data.attributes;
-    let obj = {color: 13632027}
+    let obj = {color: config.embeds.players.color.stopped}
 
     if(data.state == "off") {
         obj.name = "Server offline";
 
     } else if(data.state == "starting") {
-        obj.color = 16098851;
+        obj.color = config.embeds.players.color.starting;
         obj.name = "Server starting";
 
     } else if(!Object.keys(data.query).length) {
+        console.log(data);
         obj.name = "Server can't be queried."; // Sadly I can't do anything about this :pepecry:
         obj.desc = "This game/voice server type doesn't support queries.";
 
@@ -51,13 +74,13 @@ exports.PlayerList = async function(response) {
         obj.name = data.query.name;
         var array = [['Name', 'Score', 'Time']];
         var players = data.query.players.concat(data.query.bots);
-        obj.color = 53611;
+        obj.color = config.embeds.players.color.running;
 
         for (var i = 0; i < players.length; i++) {
             // Each player is stored as an array inside of array array[playerindex]
             array[i+1] = [  players[i].name, 
                             players[i].score, 
-                            util.Time(players[i].time)
+                            formatTime(players[i].time)
                         ];
 
         }
@@ -87,7 +110,7 @@ exports.ServerList = async function(data) {
 
     let obj = {
         name: "Server List",
-        color:  16751104,
+        color:  config.embeds.serverlist.color,
         desc:  "This is a list of all configured servers\n```\n"+string+"```"
     }
     return obj;
@@ -95,8 +118,8 @@ exports.ServerList = async function(data) {
 
 exports.ClientHelp = async function(data ) {
     return {
-        name: "Help Menu",
-        color: 16751104,
+        name: "",
+        color: config.embeds.help.color,
         desc: "**Base commands**\n```"+
         data+"help | You're looking at it.\n"+
         data+"servers | Get a list of the available servers.```\n"+
