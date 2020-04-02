@@ -71,21 +71,6 @@ exports.PlayerList = async function(response) {
     }
     return obj;
 }
-/*exports.Command = async function(data) {
-    let obj = {
-        name: "Success",
-        color:  53611,
-        desc:  "Sent command : `"+data+"`"
-    }
-}
-exports.Power = async function(data) {
-    let obj = {
-        name: "Success",
-        color:  53611,
-        desc:  "Sent command : `"+data+"`"
-    }
-}*/
-
 exports.ServerList = async function(data) {
     var string = "";
     var array = Object.entries(data);
