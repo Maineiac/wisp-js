@@ -161,19 +161,19 @@ exports.ServerList = async function(data) {
     return obj;
 }
 
-exports.ClientHelp = async function(data ) {
+exports.ClientHelp = async function() {
     return {
         name: "",
         color: config.embeds.help.color,
         desc: "**Base commands**\n```"+
-        data+"help | You're looking at it.\n"+
-        data+"servers | Get a list of the available servers.```\n"+
+        config.prefix+"help | You're looking at it.\n"+
+        config.prefix+"servers | Get a list of the available servers.```\n"+
         "**Server commands**\n These are performed with the command being the alias"+
         " for the server it's being addressed to. Here is the format for server commands : \n`"+
-        data+"alias [command] <arguments>`\n```"+
-        data+"alias [status] | Get the state and usage.\n"+
-        data+"alias [players] | Get a list of current players.\n"+
-        data+"alias [power] <signal> | Send power signal.\n"+
-        data+"alias [cmd] <command> | Send command to console.```"
+        config.prefix+"alias [command] <arguments>`\n```"+
+        config.prefix+"alias [status] | Get the state and usage.\n"+
+        config.prefix+"alias [players] | Get a list of current players.\n"+
+        config.prefix+"alias [power] <signal> | Send power signal.\n"+
+        config.prefix+"alias [cmd] <command> | Send command to console.```"
     }
 }
