@@ -30,12 +30,12 @@ module.exports = async function(type, data=null) {
         break;
 
         case 'servers':
-            prop = await format.ServerList(config.servers);
+            prop = await format.ServerList();
             embed.setAuthor(config.embeds.serverlist.title, config.embeds.serverlist.icon);
         break;
 
         case 'help':
-            prop = await format.ClientHelp(config.prefix);
+            prop = await format.ClientHelp();
             embed.setAuthor(config.embeds.help.title, config.embeds.help.icon);
         break;
     }
