@@ -141,7 +141,7 @@ exports.ServerList = async function(data) {
     } else {
         
         var array = Object.entries(config.servers);
-
+        let string = "";
         for (var i = 0; i < array.length; i++) {
             string += array[i][0]+"\n"; // This does the trick
 
