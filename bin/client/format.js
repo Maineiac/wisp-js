@@ -1,5 +1,6 @@
 const table = require('text-table');
 const config = require('../../config.js');
+var _ = require('underscore');
 exports.ServerStatus = async function(response) {
     const data = response.data.attributes;
     let obj = {};
@@ -95,23 +96,67 @@ exports.PlayerList = async function(response) {
     return obj;
 }
 exports.ServerList = async function(data) {
-    var string = "";
-    var array = Object.entries(data);
+    let obj = {};
+    if(config.handle_servers) {
+        const instance = require('./request.js');
+        const response = await instance.get('?include=allocations');
+        const servers = response.data.data;
+        let array = [['Alias', 'Name', 'IP', 'State']];
+        let v = 0;
+        let k = 0;
+        for (const s of servers) {
+            v++;
+            let ip = "";
+            let port = 0;
+            let server = s.attributes;
+            const alias = (_.invert(config.servers))[server.identifier];
+            const stats = await instance.get(`servers/${server.identifier}/utilization`);
+            let state = stats.data.attributes.state;
+            //console.log(alias);
+            let allocations = server.relationships.allocations.data;
+            for (const a of allocations) {
+                if(a.attributes.primary) {
+                    ip = a.attributes.ip;
+                    port = a.attributes.port;
+                }
+            }
+            if(alias) {
+                array[v-k] = [    alias,
+                                server.name, 
+                                ip+":"+port, 
+                                state.toUpperCase()
+                            ];
+            } else {
+                k++;
+            }
+            console.log(array);
 
-    for (var i = 0; i < array.length; i++) {
-        string += array[i][0]+"\n"; // This does the trick
+        }
+        obj = {
+            name: "",
+            color:  config.embeds.serverlist.color,
+            desc:  '```'+table(array, { align: [ 'c', 'c', 'c', 'c' ], hsep: [ '    ' ] })+'```'
+        }
+        console.log(obj);
+    } else {
+        
+        var array = Object.entries(config.servers);
 
-    }
+        for (var i = 0; i < array.length; i++) {
+            string += array[i][0]+"\n"; // This does the trick
 
-    if(string == "") { // In-case you forgot to configure any servers.
-        string == "There hasn't been any servers configured";
+        }
 
-    }
+        if(string == "") { // In-case you forgot to configure any servers.
+            string == "There hasn't been any servers configured";
 
-    let obj = {
-        name: "Server List",
-        color:  config.embeds.serverlist.color,
-        desc:  "This is a list of all configured servers\n```\n"+string+"```"
+        }
+
+        obj = {
+            name: "Server List",
+            color:  config.embeds.serverlist.color,
+            desc:  "This is a list of all configured servers\n```\n"+string+"```"
+        }
     }
     return obj;
 }
