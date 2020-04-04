@@ -30,8 +30,24 @@
     At the time of this commit (April 2, 2020) error catching for this is trash
     You'll probably have problems setting this up. Free free to contact
     Maineiac#0001 @ https://discord.gg/myJKx9t
+*/
 
-        /*------------------*\
+
+        /*----- Main -----*\
+       |------ Config ------|
+        \*----------------*/
+
+// You can proably leave this as false. If you ask Maineiac
+// for help you might be stting this to true.
+exports.debug = true;
+
+// If you don't know anything about making a bot, don't worry it's easy.
+// Follow this tutorial : https://discordpy.readthedocs.io/en/latest/discord.html
+// You'll find this key in step 7.
+exports.BotToken = "YOURBOTTOKEN"; // Your bot token.
+
+
+        /*----- Client -----*\
        |--- Authentication ---|
         \*------------------*/
 
@@ -39,15 +55,10 @@
 // All users (clients/support ops/admins) can create these.
 exports.WISPAPIKey = "YOURAPIKEY"; // Your api key
 
-// If you don't know anything about making a bot dont worry, it's easy.
-// Follow this tutorial : https://discordpy.readthedocs.io/en/latest/discord.html
-// You'll find this key in step 7.
-exports.BotToken = "YOURBOTTOKEN"; // Your bot token.
-
 // This is your host's panel url.
-exports.PanelURL = "https://your.panel.gg/";
+exports.PanelURL = "https://wisp.isbad.gg/";
 
-        /*------------------*\
+        /*----- Client -----*\
        |--- Backend Config ---|
         \*------------------*/
 // Command permissions
@@ -70,6 +81,10 @@ exports.permissions = {
     // Don't try to add more commands unless you know what you're doing.
     // You'll break stuff.
 }
+
+// Setting this to false will make the servers embed go back to the old style
+// This will cause it to only show server aliases (defined below)
+exports.handle_servers = true;
 
 
 /* Server id aliases
@@ -98,7 +113,7 @@ exports.servers = { // This supports more servers, just keep adding.
     //HINT : REMEMBER THE COMMA
 }
 
-        /*------------------*\
+        /*------Client------*\
        |-- Frontend Config ---|
         \*------------------*/
 
@@ -119,65 +134,70 @@ exports.activity = {
 // Things are labeled pretty well I think,
 // i shouldn't need to comment every line following.
 exports.embeds = {
+
     status: {
-        icon: "https://img.maineiac.dev/wjs_icons/ico_status.png",
+        title: "Server Status",
         color:{
             running: 53611,
             starting: 16098851,
             stopped: 13632027
         },
-        title: "Server Status"
+        icon: "https://img.maineiac.dev/wjs_icons/ico_status.png"
+        
     },
+
     players: {
-        icon: "https://img.maineiac.dev/wjs_icons/ico_players.png",
+        title: "Player List",
         color: {
             running: 53611,
             starting: 16098851,
             stopped: 13632027
         },
-        title: "Player List"
+        icon: "https://img.maineiac.dev/wjs_icons/ico_players.png"
+        
     },
-    cmd: {
-        icon: "https://img.maineiac.dev/wjs_icons/ico_command.png",
-        color: {
-            success: 53611,
-            failure: 13632027
-        },
-        title: "Remote Command"
-    },
-    power: {
-        icon: "https://img.maineiac.dev/wjs_icons/ico_power.png",
-        color: {
-            success: 53611,
-            failure: 13632027
-        },
-        title: "Remote Signal"
-    },
-    help: {
-        icon: "https://img.maineiac.dev/wjs_icons/ico_help.png",
-        color: 16751104,
-        title: "Help Menu"
-    },
-    serverlist: {
-        icon: "https://img.maineiac.dev/wjs_icons/ico_servers.png",
-        color: 16751104,
-        title: "Server List"
-    },
-    error: {
-        icon: "https://img.maineiac.dev/wjs_icons/ico_error.png",
-        color: 13632027,
-        title: "Error!"
-    },
-    footer: {   // This will be at the bottom of every embed
-        icon: "https://img.maineiac.dev/wjs_icons/ico_footer.png",
-        text: "WISP-JS | Maineiac#0001"
-    }
-}
 
-// This will print things to console when there are problems.
-// If you contact Maineiac it's likely you'll be told to
-// set this to true
-exports.debug = false;
+    cmd: {
+        title: "Remote Command",
+        color: {
+            success: 53611,
+            failure: 13632027
+        },
+        icon: "https://img.maineiac.dev/wjs_icons/ico_command.png"
+    },
+
+    power: {
+        title: "Remote Signal",
+        color: {
+            success: 53611,
+            failure: 13632027
+        },
+        icon: "https://img.maineiac.dev/wjs_icons/ico_power.png"
+    },
+
+    help: {
+        title: "Help Menu",
+        color: 16751104,
+        icon: "https://img.maineiac.dev/wjs_icons/ico_help.png"
+    },
+
+    serverlist: {
+        color: 16751104,
+        icon: "https://img.maineiac.dev/wjs_icons/ico_servers.png",
+    },
+
+    error: {
+        title: "Error!",
+        color: 13632027,
+        icon: "https://img.maineiac.dev/wjs_icons/ico_error.png"
+    },
+
+    footer: {   // This will be at the bottom of every embed
+        text: "WISP-JS | Maineiac#0001",
+        icon: "https://img.maineiac.dev/wisp-js.png"
+    }
+
+}
 
 // If you receive an error, look at it before creating an issue. 
 // If it mentions this file it's your fault.
