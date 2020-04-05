@@ -1,3 +1,5 @@
+This is being rewritten, please use the old branch (old) or the latest stable release.
+
 ![WISP-JS Logo](https://img.maineiac.dev/wisp-js-small.png)
 
 # WISP-JS
