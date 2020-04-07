@@ -30,11 +30,15 @@ exports.get = async function(url) {
 
         const response = await instance.get( url );
         cache.set( "wispjs_" + url, response.data, config.cacheTimer );
-        console.log( "Cache : `wispjs_" + url + "` was set." );
+        if(config.debug) {
+            console.log( "Cache : `wispjs_" + url + "` was set." );
+        }
         return response.data;
 
     } else {
-        console.log( "Cache : `wispjs_" + url + "` was found." );
+        if(config.debug) {
+            console.log( "Cache : `wispjs_" + url + "` was found." );
+        }
         return data;
 
     }
