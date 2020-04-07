@@ -41,22 +41,27 @@
 // for help you might be stting this to true.
 exports.debug = true;
 
+// How long will we store server information before running another request?
+exports.cacheTimer = 30;
+
 // If you don't know anything about making a bot, don't worry it's easy.
 // Follow this tutorial : https://discordpy.readthedocs.io/en/latest/discord.html
 // You'll find this key in step 7.
 exports.BotToken = "YOURBOTTOKEN"; // Your bot token.
 
 
-        /*----- Client -----*\
-       |--- Authentication ---|
-        \*------------------*/
+        /*-- WISP Client API --*\
+       |----- Authentication ----|
+        \*---------------------*/
 
+// This is the key for server owners
+// Obviously, admins and support ops can generate them too
 // You can create your API key here : https://your.panel.gg/account/security
-// All users (clients/support ops/admins) can create these.
+
 exports.WISPAPIKey = "YOURAPIKEY"; // Your api key
 
 // This is your host's panel url.
-exports.PanelURL = "https://wisp.isbad.gg/";
+exports.PanelURL = "https://your.panel.gg/";
 
         /*----- Client -----*\
        |--- Backend Config ---|
@@ -76,16 +81,11 @@ exports.PanelURL = "https://wisp.isbad.gg/";
 exports.permissions = {
     status: ['*'], // * = No permissions required
     players: ['*'],
-    cmd: ['roleid', 'roleid2'], // If you need to, keep adding roles.
-    power: ['roleid']
+    cmd: ['someid', 'someid'], // If you need to, keep adding roles.
+    power: ['someid']
     // Don't try to add more commands unless you know what you're doing.
     // You'll break stuff.
 }
-
-// Setting this to false will make the servers embed go back to the old style
-// This will cause it to only show server aliases (defined below)
-exports.handle_servers = true;
-
 
 /* Server id aliases
 Commands will be performed on a server by using their alias as a command.
@@ -105,9 +105,10 @@ You can find your servers id by checking the URL while looking at it's console.
         darkrp: "a2e56ffz",
         ttt: "c2r88cz5"
     
-*/                    
-exports.servers = { // This supports more servers, just keep adding. 
-    alias1: "someidhere",   // !alias1 [command]
+*/                  
+// This supports more servers, or less, just keep adding/removing them.  
+exports.servers = {  
+    alias: "someid",   // !alias1 [command]
     anotherserveralias: "anotherid",     // !anotherserveralias [command]
     thesecanbeanything: "yougetit"     // !thesecanbeanything [command]
     //HINT : REMEMBER THE COMMA
@@ -134,69 +135,67 @@ exports.activity = {
 // Things are labeled pretty well I think,
 // i shouldn't need to comment every line following.
 exports.embeds = {
-
+    servers: { // This one is special, you can configure what is shown in the server list.
+        icon: "https://img.maineiac.dev/wjs_icons/ico_servers.png",
+        color: 16751104,
+        title: "Server List",
+        list: {
+            alias: true, // Show the alias of the server defined above
+            name: false, // Show the name defined on the wisp panel (what you see on the server card)
+            ip: "alias", // Show the ip, set to "alias" to show ip alias instead
+            port: true, // Show the port, ip (line above) must be enabled, or set to "alias"
+            state: false // Show the server's state (on/off/starting), this increases response time by %50/server
+            // state should be disabled if you have a lot of servers.
+        }
+    },
     status: {
-        title: "Server Status",
+        icon: "https://img.maineiac.dev/wjs_icons/ico_status.png",
         color:{
             running: 53611,
             starting: 16098851,
             stopped: 13632027
         },
-        icon: "https://img.maineiac.dev/wjs_icons/ico_status.png"
-        
+        title: "Server Status"
     },
-
     players: {
-        title: "Player List",
+        icon: "https://img.maineiac.dev/wjs_icons/ico_players.png",
         color: {
             running: 53611,
             starting: 16098851,
             stopped: 13632027
         },
-        icon: "https://img.maineiac.dev/wjs_icons/ico_players.png"
-        
+        title: "Player List"
     },
-
     cmd: {
-        title: "Remote Command",
+        icon: "https://img.maineiac.dev/wjs_icons/ico_command.png",
         color: {
             success: 53611,
             failure: 13632027
         },
-        icon: "https://img.maineiac.dev/wjs_icons/ico_command.png"
+        title: "Remote Command"
     },
-
     power: {
-        title: "Remote Signal",
+        icon: "https://img.maineiac.dev/wjs_icons/ico_power.png",
         color: {
             success: 53611,
             failure: 13632027
         },
-        icon: "https://img.maineiac.dev/wjs_icons/ico_power.png"
+        title: "Remote Signal"
     },
-
     help: {
-        title: "Help Menu",
+        icon: "https://img.maineiac.dev/wjs_icons/ico_help.png",
         color: 16751104,
-        icon: "https://img.maineiac.dev/wjs_icons/ico_help.png"
+        title: "Help Menu"
     },
-
-    serverlist: {
-        color: 16751104,
-        icon: "https://img.maineiac.dev/wjs_icons/ico_servers.png",
-    },
-
     error: {
-        title: "Error!",
+        icon: "https://img.maineiac.dev/wjs_icons/ico_error.png",
         color: 13632027,
-        icon: "https://img.maineiac.dev/wjs_icons/ico_error.png"
+        title: "Error!"
     },
-
     footer: {   // This will be at the bottom of every embed
-        text: "WISP-JS | Maineiac#0001",
-        icon: "https://img.maineiac.dev/wisp-js.png"
+        icon: "https://img.maineiac.dev/wisp-js.png",
+        text: "WISP-JS | Maineiac#0001"
     }
-
 }
 
 // If you receive an error, look at it before creating an issue. 
