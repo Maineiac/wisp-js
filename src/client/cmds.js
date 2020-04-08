@@ -14,30 +14,32 @@ const cmds = {
     }
 }
 
-exports.listener = async function (args) { // Expects args to be Array()
+module.exports = async function (args) { // Expects args to be Array()
     let time = Date.now();
     let result;
 
-    if( _.isFunction( cmds[ args[ 0 ] ] ) ) {
+    if(_.isFunction(cmds[args[0]])) {
 
         result = await embed(
-            await cmds[ args[ 0 ] ]()
+            await cmds[args[0]]()
         );
 
-    } else if( _.isFunction( cmds.alias[ args[ 1 ] ] ) && config.servers.hasOwnProperty(args[0]))  {
+    } else if(_.isFunction(cmds.alias[args[1]]) && config.servers.hasOwnProperty(args[0]))  {
         result = await embed(
-            await cmds.alias[ args[ 1 ] ](args)
+            await cmds.alias[args[1]](args)
         );
 
-    } else if( !_.isFunction( cmds.alias[ args[ 1 ] ] ) && config.servers.hasOwnProperty(args[0]) ){
-        result = "Invalid alias sub-command : `" + args[ 1 ] + "`";
+    } else if(!_.isFunction(cmds.alias[args[1]]) && config.servers.hasOwnProperty(args[0]) ){
+        result = `Invalid alias sub-command : \`${args[1]}\``;
 
     } else {
 
-        result = "Invalid command : `" + args[ 0 ] + "`";
+        result = `Invalid command : \`${args[1]}\``;
 
     }
     let end = Date.now() - time;
-    console.log("Result took " + end + "ms");
+    if(config.debug) {
+        console.log(`Result took ${end}ms`);
+    }
     return result;
 }
