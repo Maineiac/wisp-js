@@ -1,21 +1,31 @@
 const config = require('../../../config');
 const request = require('../request');
+const errors = require('../error');
 
 const table = require('text-table');
 
 module.exports = async function(args) {
-    const response = await request.get(`/servers/${config.servers[args[0]]}/utilization`);
-    const data = response.attributes;
+    let data, response;
     let obj = {
         title: {
             text: config.embeds.status.title,
             icon: config.embeds.status.icon
         },
+        color: config.embeds.error.color,
         footer: {
             text: config.embeds.footer.text,
             icon: config.embeds.footer.icon
         }
     };
+    try {
+        response = await request.get(`/servers/${config.servers[args[0]]}/utilization`);
+        data = response.attributes;
+
+    } catch(error) {
+
+        return errors(error, 'status.js : line 20');
+
+    }
     let array = [];
     if(data.state == "on") {
         obj.color = config.embeds.status.color.running;

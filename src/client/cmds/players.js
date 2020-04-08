@@ -1,5 +1,6 @@
 const config = require('../../../config');
 const request = require('../request');
+const errors = require('../error');
 
 const table = require('text-table');
 
@@ -22,12 +23,19 @@ function formatTime(seconds) {
 }
 
 module.exports = async function(args) {
-    const response = await request.get(`/servers/${config.servers[args[0]]}/utilization`);
-    const data = response.attributes;
+    let response, data;
+    try {
+        response = await request.get(`/servers/${config.servers[args[0]]}/utilization`);
+        data = response.attributes;
+    } catch(error) {
+
+        return errors(error, 'players.js : line 27');
+
+    }
     let obj = {
         title: {
-            text: config.embeds.status.title,
-            icon: config.embeds.status.icon
+            text: config.embeds.players.title,
+            icon: config.embeds.players.icon
         },
         footer: {
             text: config.embeds.footer.text,

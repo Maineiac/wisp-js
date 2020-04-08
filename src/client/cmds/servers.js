@@ -3,6 +3,7 @@ const _ = require('underscore');
 
 const config = require('../../../config');
 const request = require('../request');
+const errors = require('../error');
 
 module.exports = async function() {
     let obj = {
@@ -18,8 +19,15 @@ module.exports = async function() {
         }
     };
 
-    const data = await request.get('?include=allocations')
-    const servers = data.data;
+    let data, servers;
+    try {
+        data = await request.get('?include=allocations')
+        servers = data.data;
+    } catch(error) {
+
+        return errors(error, 'servers.js : line 23');
+
+    }
     let tableheader = [
         (config.embeds.servers.list.alias) ? 'Alias' : false, 
         (config.embeds.servers.list.name) ? 'Name' : false, 
@@ -36,8 +44,14 @@ module.exports = async function() {
 
         const alias = (_.invert(config.servers))[server.identifier];
         if(config.embeds.servers.list.state) {
-            const stats = await request.get(`/servers/${server.identifier}/utilization`);
-            state = stats.attributes.state;
+            try {
+                const stats = await request.get(`/servers/${server.identifier}/utilization`);
+                state = stats.attributes.state;
+            } catch(error) {
+
+                return errors(error, 'servers.js : line 47');
+        
+            }
         }
         let allocations = server.relationships.allocations.data;
 
