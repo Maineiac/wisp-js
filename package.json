@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "run": "node index.js"
+    "run": "nodemon index.js"
   },
   "repository": {
     "type": "git",
