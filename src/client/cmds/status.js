@@ -3,6 +3,7 @@ const request = require('../request');
 const errors = require('../error');
 
 const table = require('text-table');
+const _ = require('underscore');
 
 module.exports = async function(args) {
     let data, response;
@@ -30,18 +31,27 @@ module.exports = async function(args) {
     if(data.state == "on") {
         obj.color = config.embeds.status.color.running;
         obj.head = data.query.name;
-        
-        let curplayers = data.players.current;
+        console.log(data);
+        // Check the current/max player count WISP can get (pretty much useless, there for sanity)
+        let curplayers = (data.players.current) ? data.players.current : "??";
         let maxplayers = data.query.maxplayers || "??";
-        if (data.query.raw) {curplayers = data.query.raw.numplayers}
+        // We need to know that the result contains query.raw, some games wont return a query at all.
+        if(data.query.raw) {
+            // Check raw. Known to work for : Garry's Mod (Source games?)
+            curplayers = (data.query.raw.steamid) ? data.query.raw.numplayers : curplayers;
+            // Check deeper into raw, this is minecraft vanilla specific (tested on vanilla 1.15.2)
+            curplayers = (data.query.raw.bedrock) ? data.query.raw.bedrock.raw.numplayers : curplayers;
+        }
+
         // The server is running, lets put resource usage in a table.
-        array = [   
+        array = _.compact([   
             ["Status", data.state.toUpperCase()],
             ["Memory", data.memory.current+'/'+data.memory.limit],
             ["CPU", Math.floor(data.cpu.current)+'/'+data.cpu.limit],
             ["Disk", data.disk.current+'/'+data.disk.limit],
-            ["Players", curplayers+'/'+maxplayers]
-        ];
+            //If  server is queryable, show player count, otherwise omit.
+            (curplayers != "??" && maxplayers != "??") ? ["Players", curplayers+'/'+maxplayers] : null
+        ]);
         if(maxplayers == "" || !data.query) {
             if(config.debug) { console.log(data); }
         }
