@@ -16,9 +16,7 @@ module.exports = async function() {
     let array = [["ID", "Name", "Location"]];
     const data = await request.get('/nodes');
     const nodes = data.data;
-    //console.log(nodes);
     for(i = 0; i < nodes.length; i++) {
-        console.log(nodes[i]);
         array[i+1] = [
 
             nodes[i].attributes.id,
@@ -26,8 +24,6 @@ module.exports = async function() {
             nodes[i].attributes.location_id
         ]
     }
-    console.log(array);
     obj.desc = '```'+table(array, { align: [ 'c', 'c', 'c' ], hsep: [ '   ' ] })+'```';
-    //console.log(data.data);
     return obj;
 }
