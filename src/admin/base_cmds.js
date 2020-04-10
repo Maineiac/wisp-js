@@ -28,7 +28,10 @@ const cmds = {
     nest: require('./cmds/nests'),
     node: {
         list: require('./cmds/node/list'),
-        get: require('./cmds/node/get')
+        get: require('./cmds/node/get'),
+        allocation: {
+            list: require('./cmds/node/allocation/list')
+        }
     },
     server: require('./cmds/servers'),
     user: require('./cmds/users')
