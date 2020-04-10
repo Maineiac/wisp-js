@@ -6,15 +6,15 @@ const embed = require('./embed');
 const cmds = {
 
     // Start test commands
-    test: function() {
+    testfunc: function() {
         return {desc: `Test worked!`}
     },
-    test2: {
+    test: {
         test: function() {
             return {desc: `Test worked!`}
         }
     },
-    test3: {
+    test2: {
         test: {
             test: function() {
                 return {desc: `Test worked!`}
@@ -27,7 +27,8 @@ const cmds = {
     location: require('./cmds/locations'),
     nest: require('./cmds/nests'),
     node: {
-        list: require('./cmds/nodes/list')
+        list: require('./cmds/node/list'),
+        get: require('./cmds/node/get')
     },
     server: require('./cmds/servers'),
     user: require('./cmds/users')
@@ -35,48 +36,36 @@ const cmds = {
 }
 
 module.exports = async function (args) { // Expects args to be Array()
+
     let time = Date.now();
-    let result;
+    let result, badcmd;
+    let cmd = cmds;
 
-    if(cmds[args[0]] && !_.isFunction(cmds[args[0]]))  {
+    for(i = 0; i < args.length; i++) {
 
-        if (cmds[args[0]][args[1]] && !_.isFunction(cmds[args[0]][args[1]])) {
-            
-            if(cmds[args[0]][args[1]][args[2]] && _.isFunction(cmds[args[0]][args[1]][args[2]])) {
-
-                result = await embed(
-                    await cmds[args[0]][args[1]][args[2]](args)
-                );
-
-            } else {
-                result = `Invalid sub sub command : \`${args[2]}\``;
-            }
-
-        } else if (cmds[args[0]][args[1]] && _.isFunction(cmds[args[0]][args[1]])) {
-            
-            result = await embed(
-                await cmds[args[0]][args[1]](args)
-            );
+        if(cmd[args[i]]) {
+            cmd = cmd[args[i]];
 
         } else {
-            result = `Invalid sub command : \`${args[1]}\``;
+            badcmd = args[i];
+
         }
 
-    } else if (cmds[args[0]] && _.isFunction(cmds[args[0]])) {
+    }
 
-        result = await embed(
-            await cmds[args[0]](args)
-        );
+    if(_.isFunction(cmd)) {
+        result = await embed( await cmd(args) );
+
+    } else if(badcmd) {
+        result = `Could not find command/subcommand : \`${badcmd}\``;
 
     } else {
-
-        result = `Invalid command : \`${args[0]}\``;
-
+        result = `Invalid command syntax, couldn't resolve problem.`;
     }
 
-    let end = Date.now() - time;
     if(config.debug) {
-        console.log(`Result took ${end}ms`);
+        console.log(`Result took ${Date.now() - time}ms`);
     }
+
     return result;
 }
