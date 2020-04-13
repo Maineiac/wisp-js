@@ -28,7 +28,6 @@ module.exports = async function(args) {
     }
     let newParams = {};
     let params = _.compact(raw_params);
-    //console.log(params);
 
     for(const p of params) {
         // We split our paramerters into [property, value],
