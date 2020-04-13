@@ -6,7 +6,7 @@ const table = require('text-table');
 module.exports = async function(args) {
     let obj = {
         title: {
-            text: "Node Editor",
+            text: `Node Editor | Node #${args[2]}`,
             icon: config.embeds.servers.icon
         },
         color: config.embeds.servers.color,
@@ -68,9 +68,9 @@ module.exports = async function(args) {
 
 
         const array = [[`Property`, `Value`]];
-        const params = array.concat(Object.entries(_.pick(data.data.attributes, Boolean)));
+        const finalarray = array.concat(Object.entries(_.pick(data.data.attributes, Boolean)));
 
-        obj.desc = `Sent data to panel.\n\`\`\`${table(params, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
+        obj.desc = `Sent data to panel.\n\`\`\`${table(finalarray, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
         return obj;
 
     } catch(error) {
