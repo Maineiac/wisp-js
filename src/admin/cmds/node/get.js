@@ -23,7 +23,7 @@ module.exports = async function(args) {
         [`CPU:`, data.attributes.cpu]
         
     ]
-    obj.desc = '```'+table(array, { align: [ 'r', 'l'], hsep: [ '   ' ] })+'```';
+    obj.desc = `${data.attributes.description}\`\`\`${table(array, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
     console.log(data);
     return obj;
 }
