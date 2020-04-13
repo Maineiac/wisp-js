@@ -1,5 +1,6 @@
 const request = require('../../request');
 const config = require('../../../../config');
+const errors = require('../../error');
 const table = require('text-table');
 module.exports = async function(args) {
     let obj = {
@@ -13,22 +14,26 @@ module.exports = async function(args) {
             icon: config.embeds.footer.icon
         }
     };
+
+    let data;
+
     try {
-        const data = await request.get(`/nodes/${args[2]}`);
-        const created = new Date(data.attributes.created_at).toDateString();
-        const array = [
-            [`Name:`, data.attributes.name],
-            [`Node ID:`, data.attributes.id],
-            [`Location ID:`, data.attributes.location_id],
-            [`Memory:`, data.attributes.memory],
-            [`Disk:`, data.attributes.disk],
-            [`CPU:`, data.attributes.cpu],
-            [`Created:`, created]
-            
-        ]
-        obj.desc = `${data.attributes.description}\`\`\`${table(array, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
-        return obj;
+        data = await request.get(`/nodes/${args[2]}`);
     } catch(error) {
-        return errors(error, 'admin/node/edit.js : line 51');
+        return errors(error, 'admin/node/get.js : line 21');
     }
+
+    const created = new Date(data.attributes.created_at).toDateString();
+    const array = [
+        [`Name:`, data.attributes.name],
+        [`Node ID:`, data.attributes.id],
+        [`Location ID:`, data.attributes.location_id],
+        [`Memory:`, data.attributes.memory],
+        [`Disk:`, data.attributes.disk],
+        [`CPU:`, data.attributes.cpu],
+        [`Created:`, created]
+        
+    ]
+    obj.desc = `${data.attributes.description}\`\`\`${table(array, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
+    return obj;
 }
