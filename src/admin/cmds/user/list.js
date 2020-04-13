@@ -15,7 +15,12 @@ module.exports = async function() {
         }
     };
     let array = [["ID", "Username", "Type"]];
-    const data = await request.get('/users');
+    let data;
+    try {
+        data = await request.get('/users');
+    } catch(error) {
+        return errors(error, 'admin/user/list.js : line 20');
+    }
     const users = data.data;
     for(i = 0; i < users.length; i++) {
         array[i+1] = [
