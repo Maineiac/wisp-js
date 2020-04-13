@@ -49,3 +49,9 @@ exports.post = async function(url, data) {
     return response;
     
 }
+
+exports.patch = async function(url, data) {
+    const response = await instance.patch(url, data);
+    return response;
+    
+}
