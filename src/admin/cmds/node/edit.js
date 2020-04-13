@@ -38,7 +38,6 @@ module.exports = async function(args) {
 
     let params = _.compact(raw_params);
     let curParams = getConfig.attributes;
-    //console.log(params);
     for(const p of params) {
         let arr = p.split("=");
 
