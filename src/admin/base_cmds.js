@@ -28,7 +28,9 @@ const cmds = {
     nest: require('./cmds/nests'),
     node: {
         allocation: {
-            list: require('./cmds/node/allocation/list')
+            list: require('./cmds/node/allocation/list'),
+            create: require('./cmds/node/allocation/create'),
+            delete: require('./cmds/node/allocation/delete')
         },
         edit: require('./cmds/node/edit'),
         get: require('./cmds/node/get'),
