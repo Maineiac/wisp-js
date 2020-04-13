@@ -17,49 +17,63 @@ module.exports = async function(args) {
         }
     };
 
+    // This chunk will format the string and work with any strings (parameters wrapped in quotes)
+    // It allows the user to use spaces in parameters if the wrap the value in quotes
     let raw_params = args.slice(3);
     raw_params = raw_params.join(" ");
     raw_params = raw_params.match(/[^\s"']+|"([^"]*)"/gmi);
     for(i = 0; i < raw_params.length; i++){
         if(raw_params[i] != null && raw_params[i+1] != null && raw_params[i].charAt(raw_params[i].length - 1) == "="){
             if(raw_params[i+1].startsWith('"') || raw_params[i+1].startsWith("'")) {
-                raw_params[i] = `${raw_params[i]}${raw_params[i+1]}`;
-                raw_params[i+1] = null;
+                raw_params[i] = `${raw_params[i]}${raw_params[i+1]}`; // Looking for better ways to do this
+                raw_params[i+1] = null; // After a bunch of checks, this magic reformats our array
             }
         }
     }
 
-    let getConfig;
+    let params = _.compact(raw_params); // Removes any keys that we gave a null value
+    
+    // Next we'll grab the current configuration of the node, then overwrite them with
+    // any new parameters that are in raw_params
+    let newParams;
     try {
-        getConfig = await request.get(`/nodes/${args[2]}`);
+
+        data = await request.get(`/nodes/${args[2]}`);
+        newParams = data.attributes; // Assign current data to newParams object.
+
     } catch(error) {
-        return errors(error, 'edit.js : line 34');
+        return errors(error, 'admin/node/edit.js : line 34');
+
     }
 
-    let params = _.compact(raw_params);
-    let curParams = getConfig.attributes;
     for(const p of params) {
+        // We split our paramerters into [property, value],
+        // remove any quotes, and assign it the value based
+        // on existing properties in newParams.
+        // nonexistent/misspelled parameters aren't caught
+        // they're simply ignored.
         let arr = p.split("=");
-
         let value = arr[1].replace(/"/g, '');
         value = value.replace(/'/g, '');
-        curParams[arr[0]] =  value;
+        newParams[arr[0]] =  value;
     }
 
     try {
-        const data = await request.patch(`/nodes/${args[2]}`, curParams);
+        // Send the new configuration to wisp, get a result that has changed properties.
+        const data = await request.patch(`/nodes/${args[2]}`, newParams);
+        
+        // Omit sensitive data
+        data.data.attributes.license_key = `OMITTED`;
+        data.data.attributes.fqdn = `OMITTED`;
 
-        curParams.license_key = `OMITTED`;
-        curParams.fqdn = `OMITTED`;
 
-        let array = [[`Property`, `Value`]];
-        let nonull = _.pick(curParams, Boolean); 
-        let params = Object.entries(nonull);
-        let final = array.concat(params)
+        const array = [[`Property`, `Value`]];
+        const params = array.concat(Object.entries(_.pick(data.data.attributes, Boolean)));
 
-        obj.desc = `Sent data to panel.\n\`\`\`${table(final, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
+        obj.desc = `Sent data to panel.\n\`\`\`${table(params, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
         return obj;
+
     } catch(error) {
-        return errors(error, 'edit.js : line 51');
+        return errors(error, 'admin/node/edit.js : line 51');
     }
 }
