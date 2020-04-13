@@ -14,15 +14,19 @@ module.exports = async function(args) {
         }
     };
     const page = (args[4]) ? args[4] : 1;
+    let data;
     let array = [["ID", "Connection", "Assigned"]];
-    const data = await request.get(`/nodes/${args[3]}/allocations?page=${page}`);
-    console.log(data);
+    try {
+        data = await request.get(`/nodes/${args[3]}/allocations?page=${page}`);
+    } catch(error) {
+        return errors(error, 'admin/allocation/list.js : line 20');
+    }
     const allocations = data.data;
     for(i = 0; i < allocations.length; i++) {
         array[i+1] = [
 
             allocations[i].attributes.id,
-            allocations[i].attributes.ip+':'+allocations[i].attributes.port,
+            `${allocations[i].attributes.ip}:${allocations[i].attributes.port}`,
             allocations[i].attributes.assigned
         ]
     }
