@@ -24,8 +24,8 @@ const cmds = {
     // end test commands
 
 
-    location: require('./cmds/locations'),
-    nest: require('./cmds/nests'),
+    location: {},
+    nest: {},
     node: {
         allocation: {
             list: require('./cmds/node/allocation/list'),
@@ -39,8 +39,12 @@ const cmds = {
             return {desc:"I might add this when I'm done with the bot. I don't want to delete my nodes."};
         }
     },
-    server: require('./cmds/servers'),
-    user: require('./cmds/users')
+    server: {},
+    user: {
+        edit: require('./cmds/user/edit'),
+        get: require('./cmds/user/get'),
+        list: require('./cmds/user/list'),
+    }
 
 }
 
