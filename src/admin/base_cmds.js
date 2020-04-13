@@ -27,8 +27,9 @@ const cmds = {
     location: require('./cmds/locations'),
     nest: require('./cmds/nests'),
     node: {
-        list: require('./cmds/node/list'),
+        edit: require('./cmds/node/edit'),
         get: require('./cmds/node/get'),
+        list: require('./cmds/node/list'),
         allocation: {
             list: require('./cmds/node/allocation/list')
         }
