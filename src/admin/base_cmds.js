@@ -27,11 +27,14 @@ const cmds = {
     location: require('./cmds/locations'),
     nest: require('./cmds/nests'),
     node: {
+        allocation: {
+            list: require('./cmds/node/allocation/list')
+        },
         edit: require('./cmds/node/edit'),
         get: require('./cmds/node/get'),
         list: require('./cmds/node/list'),
-        allocation: {
-            list: require('./cmds/node/allocation/list')
+        delete: function() {
+            return {desc:"I might add this when I'm done with the bot. I don't want to delete my nodes."};
         }
     },
     server: require('./cmds/servers'),
