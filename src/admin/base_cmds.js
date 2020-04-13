@@ -60,7 +60,7 @@ module.exports = async function (args) { // Expects args to be Array()
             cmd = cmd[args[i]];
 
         } else {
-            badcmd = args[i];
+            badcmd = (badcmd) ? badcmd : args[i];
 
         }
 
