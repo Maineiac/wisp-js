@@ -55,3 +55,9 @@ exports.patch = async function(url, data) {
     return response;
     
 }
+
+exports.delete = async function(url) {
+    const response = await instance.delete(url);
+    return response;
+    
+}
