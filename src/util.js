@@ -31,6 +31,11 @@ module.exports.parseRawParams = function(params, base=false) {
         console.log(arr);
         let value = arr[1].replace(/"/g, '');
         value = value.replace(/'/g, '');
+        if(value == "true") {
+            value = true;
+        } else if(value == "false") {
+            value = false;
+        }
         newParams[arr[0]] =  value;
 
     }
