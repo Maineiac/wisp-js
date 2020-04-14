@@ -44,6 +44,8 @@ const cmds = {
         edit: require('./cmds/user/edit'),
         get: require('./cmds/user/get'),
         list: require('./cmds/user/list'),
+        create: require('./cmds/user/create'),
+        delete: require('./cmds/user/delete')
     }
 
 }
