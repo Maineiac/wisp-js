@@ -15,19 +15,20 @@ module.exports = async function(args) {
     };
     try {
         const data = await request.get(`/users/${args[2]}`);
-        console.log(data);
         const created = new Date(data.attributes.created_at).toDateString();
         const array = [
-            [`Name:`, data.attributes.name],
-            [`Node ID:`, data.attributes.id],
-            [`Location ID:`, data.attributes.location_id],
-            [`Memory:`, data.attributes.memory],
-            [`Disk:`, data.attributes.disk],
-            [`CPU:`, data.attributes.cpu],
-            [`Created:`, created]
+            [`ID`, data.attributes.id],
+            [`First Name`, data.attributes.first_name],
+            [`Last Name`, data.attributes.last_name],
+            [`E-Mail`, data.attributes.email],
+            [`Language`, data.attributes.language],
+            [`Admin`, data.attributes.root_admin],
+            [`2FA`, data.attributes['2fa']],
+            [`Created`, created],
+            [`UUID`, data.attributes.uuid]
             
         ]
-        obj.desc = `${data.attributes.description}\`\`\`${table(array, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
+        obj.desc = `\`\`\`${table(array, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
         return obj;
     } catch(error) {
         return errors(error, 'admin/user/get.js : line 51');
