@@ -10,7 +10,8 @@ const errors = {
     500: ['**500** | `Internal Server Error`', 'WISP has had a problem. Contact support.'],
     503: ['**503** | `Service Unavailable`', 'WISP is temporarily offline for maintenance, try again later.'],
     504: ['**504** | `DaemonConnectionException`', 'The daemon isn\'t responding. '],
-    'ENOTFOUND': ['**ENOTFOUND**', 'Invalid PanelURL in config.js, no instance to make requests from.']
+    'ENOTFOUND': ['**ENOTFOUND**', 'Invalid PanelURL in config.js, no instance to make requests from.'],
+    'ECONNABORTED': ['**ECONNABORTED**', 'Axios timed out (took more than 5 seconds) while sending/waiting for a response.']
 }
 module.exports = function(error, location) {
     const handled = errors[
