@@ -45,21 +45,15 @@ module.exports = async function(args) {
         const data = await request.patch(`/users/${args[2]}`, params);
 
 
-        const array = [[`Property`, `Value`]];
-        const finalParams = array.concat(
-            Object.entries(_.pick(data.data.attributes, Boolean))
+        const array = util.arrayBooleansToStrings(
+
+            [[`Property`, `Value`]].concat(
+                Object.entries(data.data.attributes)
+            )
+
         );
 
-        const pAWB = array.concat(Object.entries(data.data.attributes));
-        let pAWOB = [];
-        for(const p in pAWB) {
-            pAWOB[p] = [
-                pAWB[p][0],
-                (_.isBoolean(pAWB[p][1])) ? pAWB[p][1].toString() : pAWB[p][1]
-            ]
-        }
-
-        obj.desc = `Sent data to panel.\n\`\`\`${table(pAWOB, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
+        obj.desc = `Sent data to panel.\n\`\`\`${table(array, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
         
         return obj;
 
