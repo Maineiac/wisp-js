@@ -1,6 +1,7 @@
 const request = require('../../request');
 const config = require('../../../../config');
 const errors = require('../../error');
+const util = require('../../../util.js');
 const _ = require('underscore');
 const table = require('text-table');
 module.exports = async function(args) {
@@ -18,72 +19,46 @@ module.exports = async function(args) {
         }
     };
 
-    // This chunk will format the string and work with any strings (parameters wrapped in quotes)
-    // It allows the user to use spaces in parameters if the wrap the value in quotes
-    let raw_params = args.slice(3);
-    raw_params = raw_params.join(" ");
-    raw_params = raw_params.match(/[^\s"']+|"([^"]*)"/gmi);
-
-    // Run through all keys in raw_params and reform the array
-    for(i = 0; i < raw_params.length; i++){
-
-        if(raw_params[i] != null && 
-            raw_params[i+1] != null && 
-            raw_params[i].charAt(raw_params[i].length - 1) == "=") {
-
-            //Move strings wrapped in "" to the correct key
-            if(raw_params[i+1].startsWith('"') || raw_params[i+1].startsWith("'")) {
-                raw_params[i] = `${raw_params[i]}${raw_params[i+1]}`; // Looking for better ways to do this
-                raw_params[i+1] = null; // After a bunch of checks, this magic reformats our array
-            
-            }
-
-        }
-
-    }
-
-    let params = _.compact(raw_params); 
-    let newParams;
-
+    let baseParams;
+    
     try {
 
         data = await request.get(`/nodes/${args[2]}`);
-        newParams = data.attributes; // Assign current data to newParams object.
+        baseParams = data.attributes; // Assign current data to newParams object.
 
     } catch(error) {
-        return errors(error, 'admin/node/edit.js : line 41');
+        return errors(error, 'admin/node/edit.js : line 29');
 
     }
 
-    for(const p of params) {
+    const params = await util.parseRawParams(
+         _.compact(
 
-        let arr = p.split("=");
+            util.parseParamsWithQuotes(
+                args.slice(3).join(" "))
 
-        let value = arr[1].replace(/"/g, '');
-        value = value.replace(/'/g, '');
-
-        newParams[arr[0]] = value;
-
-    }
+        ), baseParams);
 
     try {
         // Send the new configuration to wisp, get a result that has changed properties.
-        const data = await request.patch(`/nodes/${args[2]}`, newParams);
+        const data = await request.patch(`/nodes/${args[2]}`, params);
         
         // Omit sensitive data
-        data.data.attributes.license_key = `OMITTED`;
-        data.data.attributes.fqdn = `OMITTED`;
+        data.data.attributes.license_key = false;
+        data.data.attributes.fqdn = false;
 
 
         const array = [[`Property`, `Value`]];
-        const finalarray = array.concat(Object.entries(_.pick(data.data.attributes, Boolean)));
+        const finalParams = array.concat(
+            Object.entries(_.pick(data.data.attributes, Boolean))
+        );
 
-        obj.desc = `Sent data to panel.\n\`\`\`${table(finalarray, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
+        obj.desc = `Sent data to panel.\n\`\`\`${table(finalParams, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
         
         return obj;
 
     } catch(error) {
-        return errors(error, 'admin/node/edit.js : line 51');
+        return errors(error, 'admin/node/edit.js : line 54');
 
     }
 }
