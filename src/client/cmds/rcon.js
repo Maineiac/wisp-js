@@ -45,16 +45,7 @@ module.exports = async function(args) {
     } catch(error) {
         // 404 - Bad server id/url
         // 412 - Server exists but is offline
-        let handled = errors(error.response.status)
-        obj.title= {
-            text: config.embeds.error.title,
-            icon: config.embeds.error.icon
-        }
-        obj.desc = `${handled[0]}\n${handled[1]}\n`;
-        if(config.debug) {
-            obj.desc = obj.desc + "```rcon.js : line 33-36```";
-            console.log("Caught error : " + error.response.status);
-        }
+        return errors(error, 'rcon.js : line 38');
     }
 
     return obj;
