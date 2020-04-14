@@ -31,7 +31,14 @@ const cmds = {
         edit: require('./cmds/location/edit'),
         delete: require('./cmds/location/delete')
     },
-    nest: {},
+    nest: {
+        list: require('./cmds/nest/list'),
+        get: require('./cmds/nest/get'),
+        egg: {
+            list: require('./cmds/nest/egg/list'),
+            get: require('./cmds/nest/egg/get')
+        }
+    },
     node: {
         allocation: {
             list: require('./cmds/node/allocation/list'),
@@ -82,6 +89,7 @@ module.exports = async function (args) { // Expects args to be Array()
 
     } else {
         result = `Invalid command syntax, couldn't resolve problem.`;
+        
     }
 
     if(config.debug) {
