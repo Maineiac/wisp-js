@@ -24,7 +24,13 @@ const cmds = {
     // end test commands
 
 
-    location: {},
+    location: {
+        list: require('./cmds/location/list'),
+        get: require('./cmds/location/get'),
+        create: require('./cmds/location/create'),
+        edit: require('./cmds/location/edit'),
+        delete: require('./cmds/location/delete')
+    },
     nest: {},
     node: {
         allocation: {
