@@ -38,6 +38,8 @@ module.exports.parseRawParams = function(params, base=false) {
             value = true;
         } else if(value == "false") {
             value = false;
+        } else if(!value) {
+            value = "none";
         }
 
         newParams[arr[0]] =  value;
@@ -59,7 +61,8 @@ module.exports.arrayBooleansToStrings = function(array) {
         parsed[p] = [
 
             array[p][0],
-            (_.isBoolean(array[p][1])) ? array[p][1].toString() : array[p][1]
+            (_.isBoolean(array[p][1])) ? array[p][1].toString() : 
+            (!array[p][1]) ? "none" : array[p][1]
 
         ]
 
