@@ -25,6 +25,7 @@ module.exports = async function(args) {
             [`Name`, data.attributes.name],
             [`Author`, data.attributes.author],
             [`Created`, created],
+            [`Image`, data.attributes.docker_image]
             [`UUID`, data.attributes.uuid]
             
         ]
