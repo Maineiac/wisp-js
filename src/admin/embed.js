@@ -26,10 +26,12 @@ module.exports = async function (prop) {
     if (prop) {
         const embed = new Discord.MessageEmbed();
         
-        embed.setAuthor(
-            (prop.title.text) ? prop.title.text : "??", 
-            (prop.title.icon) ? prop.title.icon : ""
-        );
+        if(prop.title) {
+            embed.setAuthor(
+                (prop.title.text) ? prop.title.text : "", 
+                (prop.title.icon) ? prop.title.icon : ""
+            );
+        }
 
         embed.setTitle((prop.head) ? prop.head : "");
 
@@ -44,11 +46,13 @@ module.exports = async function (prop) {
                 embed.addField(a[0], a[1], a[2]);
             }
         }
-        
-        embed.setFooter(
-            (prop.footer.text) ? prop.footer.text : "??", 
-            (prop.footer.icon) ? prop.footer.icon : ""
-        );
+
+        if(prop.footer) {
+            embed.setFooter(
+                (prop.footer.text) ? prop.footer.text : "??", 
+                (prop.footer.icon) ? prop.footer.icon : ""
+            );
+        }
 
         embed.setTimestamp();
 

@@ -1,7 +1,6 @@
+const config = require(`${process.env.root}/config`);
+const embed = require(`${process.env.root}/src/admin/embed`);
 const _ = require('underscore');
-
-const config = require('../../config');
-const embed = require('./embed');
 
 const cmds = {
 
@@ -52,7 +51,12 @@ const cmds = {
             return {desc:"I might add this when I'm done with the bot. I don't want to delete my nodes."};
         }
     },
-    server: {},
+    server: {
+        list: require('./cmds/server/list'),
+        get: {
+            details: require('./cmds/server/get/details')
+        }
+    },
     user: {
         edit: require('./cmds/user/edit'),
         get: require('./cmds/user/get'),

@@ -1,4 +1,4 @@
-const config = require('../../config');
+const config = require(`${process.env.root}/config`);
 const errors = {
     400: ['**400** | `Bad Request`', 'Probably a bad config.'],
     401: ['**401** | `Unauthorized`', 'The Dino API key is probably invalid.'],

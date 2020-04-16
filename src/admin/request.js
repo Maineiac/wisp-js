@@ -1,4 +1,4 @@
-const config = require( '../../config.js' );
+const config = require(`${process.env.root}/config`);
 const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 
@@ -42,6 +42,19 @@ exports.get = async function(url) {
         return data;
 
     }
+}
+
+exports.getRecursive = async function(url) {
+    const data = await this.get(url);
+    let servers = data.data;
+    if(data.meta.pagination.total_pages > 1) {
+        for(i = 2; i <= data.meta.pagination.total_pages; i++) {
+            let temp = await request.get(`${url}?page=${i}`)
+            let tempArray = temp.data;
+            servers = servers.concat(tempArray);
+        }
+    }
+    return servers;
 }
 
 exports.post = async function(url, data) {

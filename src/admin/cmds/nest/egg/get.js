@@ -1,9 +1,10 @@
-const request = require('../../../request');
-const config = require('../../../../../config');
-const errors = require('../../../error');
-const util = require('../../../../util.js');
+const request = require(`${process.env.root}/src/admin/request`);
+const config = require(`${process.env.root}/config`);
+const errors = require(`${process.env.root}/src/admin/error`);
+const util = require(`${process.env.root}/src/util.js`);
 const _ = require('underscore');
 const table = require('text-table');
+
 module.exports = async function(args) {
     let obj = {
         title: {

@@ -1,4 +1,4 @@
-const config = require('../config');
+const config = require(`${process.env.root}/config`);
 const _ = require('underscore');
 
 module.exports.parseParamsWithQuotes = function(args) {
@@ -38,9 +38,7 @@ module.exports.parseRawParams = function(params, base=false) {
             value = true;
         } else if(value == "false") {
             value = false;
-        } else if(!value) {
-            value = "none";
-        }
+        } 
 
         newParams[arr[0]] =  value;
 
@@ -53,7 +51,7 @@ module.exports.parseRawParams = function(params, base=false) {
     return newParams;
 }
 
-module.exports.arrayBooleansToStrings = function(array) {
+module.exports.cleanArray = function(array) {
     let parsed = [];
 
     for(const p in array) {
