@@ -1,99 +1,26 @@
 const config = require(`${process.env.root}/config`);
 const embed = require(`${process.env.root}/src/admin/embed`);
 const _ = require('underscore');
+const fs = require('fs')
 
-const cmds = {
-
-    // Start test commands
-    testfunc: function() {
-        return {desc: `Test worked!`}
-    },
-    test: {
-        test: function() {
-            return {desc: `Test worked!`}
-        }
-    },
-    test2: {
-        test: {
-            test: function() {
-                return {desc: `Test worked!`}
-            }
-        }
-    },
-    // end test commands
-
-
-    location: {
-        list: require('./cmds/location/list'),
-        get: require('./cmds/location/get'),
-        create: require('./cmds/location/create'),
-        edit: require('./cmds/location/edit'),
-        delete: require('./cmds/location/delete')
-    },
-    nest: {
-        list: require('./cmds/nest/list'),
-        get: require('./cmds/nest/get'),
-        egg: {
-            list: require('./cmds/nest/egg/list'),
-            get: require('./cmds/nest/egg/get')
-        }
-    },
-    node: {
-        allocation: {
-            list: require('./cmds/node/allocation/list'),
-            create: require('./cmds/node/allocation/create'),
-            delete: require('./cmds/node/allocation/delete')
-        },
-        edit: require('./cmds/node/edit'),
-        get: require('./cmds/node/get'),
-        list: require('./cmds/node/list'),
-        delete: function() {
-            return {desc:"I might add this when I'm done with the bot. I don't want to delete my nodes."};
-        }
-    },
-    server: {
-        list: require('./cmds/server/list'),
-        get: {
-            details: require('./cmds/server/get/details')
-        }
-    },
-    user: {
-        edit: require('./cmds/user/edit'),
-        get: require('./cmds/user/get'),
-        list: require('./cmds/user/list'),
-        create: require('./cmds/user/create'),
-        delete: require('./cmds/user/delete')
-    }
-
-}
-
-module.exports = async function (args) { // Expects args to be Array()
+module.exports = async function (args) {
 
     let time = Date.now();
-    let result, badcmd;
-    let cmd = cmds;
-
-    for(i = 0; i < args.length; i++) {
-
-        if(cmd[args[i]]) {
-            cmd = cmd[args[i]];
-
-        } else {
-            badcmd = (badcmd) ? badcmd : args[i];
-
+    let cmd = `${process.env.root}/src/admin/cmds`;
+    let result = "Nothing is invalid, but you probably need to specify a subcommand";
+    for(const a of args) {
+        try {
+            let exec = require(`${cmd}/${a}`);
+            result = await embed( await exec(args) );
+            break;
+        } catch (error) {
+            if (fs.existsSync(`${cmd}/${a}`)) {
+                cmd = `${cmd}/${a}`;
+            } else { 
+                result = `Invalid command/subcommand : \`${a}\``
+                break;
+            }
         }
-
-    }
-
-    if(_.isFunction(cmd)) {
-        result = await embed( await cmd(args) );
-
-    } else if(badcmd) {
-        result = `Could not find command/subcommand : \`${badcmd}\``;
-
-    } else {
-        result = `Invalid command syntax, couldn't resolve problem.`;
-        
     }
 
     if(config.debug) {
