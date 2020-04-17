@@ -29,7 +29,6 @@ module.exports.parseRawParams = function(params, base=false) {
     let newParams = (base) ? base : {};
 
     for(const p of params) {
-
         let arr = p.split("=");
         let value = arr[1].replace(/"/g, '');
         value = value.replace(/'/g, '');
@@ -40,14 +39,19 @@ module.exports.parseRawParams = function(params, base=false) {
             value = false;
         } 
 
-        newParams[arr[0]] =  value;
+        let dot = arr[0].split(".")
+        if(dot[1]) {
+            newParams[dot[0]] = (newParams[dot[0]]) ? newParams[dot[0]] : {};
+            newParams[dot[0]][dot[1]] = value;
+        } else {
+            newParams[arr[0]] =  value;
+        }
 
     }
 
     if(newParams.ports) {
         newParams.ports = newParams.ports.split(`,`);
     }
-
     return newParams;
 }
 
@@ -55,7 +59,6 @@ module.exports.cleanArray = function(array) {
     let parsed = [];
 
     for(const p in array) {
-        console.log(array[p])
         if(array[p][0] != "STARTUP") {
             parsed[p] = [
 
@@ -65,7 +68,7 @@ module.exports.cleanArray = function(array) {
 
             ]
         }
-        console.log(parsed[p])
+
 
     }
 
