@@ -55,14 +55,17 @@ module.exports.cleanArray = function(array) {
     let parsed = [];
 
     for(const p in array) {
+        console.log(array[p])
+        if(array[p][0] != "STARTUP") {
+            parsed[p] = [
 
-        parsed[p] = [
+                array[p][0],
+                (_.isBoolean(array[p][1])) ? array[p][1].toString() : 
+                (!array[p][1]) ? "none" : array[p][1]
 
-            array[p][0],
-            (_.isBoolean(array[p][1])) ? array[p][1].toString() : 
-            (!array[p][1]) ? "none" : array[p][1]
-
-        ]
+            ]
+        }
+        console.log(parsed[p])
 
     }
 
