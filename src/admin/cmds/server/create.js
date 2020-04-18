@@ -3,6 +3,7 @@ const request = require('../../request');
 const config = require('../../../../config');
 const errors = require('../../error');
 const util = require('../../../util.js');
+const fs = require('fs');
 const _ = require('underscore');
 const table = require('text-table');
 
@@ -21,14 +22,26 @@ module.exports = async function(args) {
             icon: config.embeds.footer.icon
         }
     };
+    let template
+    let userparams
+    let slice = 2;
+    if(!args[2].includes('=')) { 
+        template = JSON.parse(fs.readFileSync(`${process.env.root}/data/server_templates/${args[2]}.json`, 'utf8'));
+        slice = 3;
+    }
 
-    const params = await util.parseRawParams(
+    if(args[slice]) {
+        userparams = await util.parseRawParams(
 
-            _.compact(
-            util.parseParamsWithQuotes(
-                args.slice(2).join(" "))
-        )
-    );
+                _.compact(
+                util.parseParamsWithQuotes(
+                    args.slice(slice).join(" "))
+            )
+        );
+    }
+
+    const params = {...template, ...userparams}
+    console.log(params);
 
     try {
         
