@@ -11,7 +11,8 @@ const errors = {
     500: ['WISP has had a problem. Contact support.'],
     503: ['WISP is temporarily offline for maintenance, try again later.'],
     504: ['The daemon isn\'t responding. '],
-    'ENOTFOUND': ['Invalid PanelURL in config.js, no instance to make requests from.']
+    'ENOTFOUND': ['Invalid PanelURL in config.js, no instance to make requests from.'],
+    'ENOENT': ['I needed, and was unable, to load a file on the system.']
 }
 module.exports = function (error, location) {
     console.log(error);
@@ -38,7 +39,7 @@ module.exports = function (error, location) {
     } else {
         obj.desc = "Unhandled";
     }
-    if(error.response.data.errors) {
+    if(error.response && error.response.data.errors) {
         let build = "";
         for(const e of error.response.data.errors) {
             build = `${build}${e.detail}\n`;
