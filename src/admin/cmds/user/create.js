@@ -33,7 +33,7 @@ module.exports = async function(args) {
         const data = await request.post(`/users`, params);
 
 
-        const array = util.arrayBooleansToStrings(
+        const array = util.cleanArray(
 
             [[`Property`, `Value`]].concat(
                 Object.entries(data.data.attributes)

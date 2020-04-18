@@ -46,7 +46,7 @@ module.exports = async function(args) {
         const data = await request.patch(`/locations/${args[2]}`, params);
 
 
-        const array = util.arrayBooleansToStrings(
+        const array = util.cleanArray(
 
             [[`Property`, `Value`]].concat(
                 Object.entries(data.data.attributes)
