@@ -5,7 +5,7 @@ const util = require(`${process.env.root}/src/util.js`);
 const _ = require('underscore');
 const table = require('text-table');
 module.exports = async function(args) {
-    let id = args[3];
+    let id = args[2];
     let obj = {
         title: {
             text: "Server Lookup",
@@ -17,11 +17,11 @@ module.exports = async function(args) {
             icon: config.embeds.footer.icon
         }
     };
-    if(isNaN(args[3])) {
+    if(isNaN(args[2])) {
         const servers = await request.getRecursive(`/servers`);
         for(const s of servers) {
             console.log(s.attributes.identifier)
-            if(args[3] == s.attributes.identifier) {
+            if(args[2] == s.attributes.identifier) {
                 id = s.attributes.id;
             }
         }
