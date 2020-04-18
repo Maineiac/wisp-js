@@ -14,11 +14,18 @@ module.exports = async function (args) {
             result = await embed( await exec(args) );
             break;
         } catch (error) {
-            if (fs.existsSync(`${cmd}/${a}`)) {
-                cmd = `${cmd}/${a}`;
-            } else { 
-                result = `Invalid command/subcommand : \`${a}\``
+            try {
+                let exec = require(`${cmd}/${a}/${a}`);
+                result = await embed( await exec(args) );
                 break;
+            } catch(error) {
+                if (fs.existsSync(`${cmd}/${a}`)) {
+                    cmd = `${cmd}/${a}`;
+                } else { 
+                    console.log(error);
+                    result = `Invalid command/subcommand : \`${a}\``
+                    break;
+                }
             }
         }
     }
