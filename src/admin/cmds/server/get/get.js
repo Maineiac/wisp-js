@@ -91,6 +91,6 @@ module.exports = async function(args) {
         }
         return obj;
     } catch(error) {
-        return errors(error, 'admin/user/get.js : line 51');
+        return errors(error, 'admin/server/get/get.js : line 51');
     }
 }
