@@ -31,9 +31,9 @@ module.exports = async function(args) {
             
         ]
         obj.desc = `${data.attributes.description}
-        \`\`\`${table(array, { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
+        \`\`\`${table(util.cleanArray(array), { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
         return obj;
     } catch(error) {
-        return errors(error, 'admin/nests/get.js : line 20');
+        return errors(error, 'admin/nests/get/egg.js : line 21');
     }
 }
