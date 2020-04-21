@@ -1,4 +1,5 @@
-const config = require('../config.js');
+const settings = require(`${process.env.root}/config/settings`);
+const auth = require(`${process.env.root}/config/authorization`);
 const listener = require('./listener.js');
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -10,7 +11,7 @@ client.on('ready', () => { // Called when the bot is "ready"
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setStatus('available')
     client.user.setPresence({
-        activity: config.activity
+        activity: settings.activity
     });
 });
 
@@ -20,4 +21,4 @@ client.on('message', msg => { // Start listening for messages
 });
 
 // Turn the key (connect to discord)
-client.login(config.BotToken);
+client.login(auth.BotToken);
