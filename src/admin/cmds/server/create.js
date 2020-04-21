@@ -3,28 +3,18 @@ const request = require(`${process.env.root}/src/admin/request`);
 const config = require(`${process.env.root}/config`);
 const errors = require(`${process.env.root}/src/admin/error`);
 const util = require(`${process.env.root}/src/util.js`);
+
 const fs = require('fs');
 const _ = require('underscore');
-const table = require('text-table');
 
 const getServer = require('./get/get')
+
 module.exports = async function(args) {
 
-    let obj = {
-        title: {
-            text: `Server Creator`,
-            icon: config.embeds.servers.icon
-        },
-        color: config.embeds.servers.color,
-        desc: "",
-        footer: {
-            text: config.embeds.footer.text,
-            icon: config.embeds.footer.icon
-        }
-    };
     let template
     let userparams
     let slice = 2;
+    
     if(!args[2].includes('=')) { 
         try {
             template = JSON.parse(fs.readFileSync(`${process.env.root}/data/server_templates/${args[2]}.json`, 'utf8'));

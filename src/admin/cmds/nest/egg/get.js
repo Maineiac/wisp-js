@@ -1,22 +1,13 @@
 const request = require(`${process.env.root}/src/admin/request`);
-const config = require(`${process.env.root}/config`);
 const errors = require(`${process.env.root}/src/admin/error`);
 const util = require(`${process.env.root}/src/util.js`);
-const _ = require('underscore');
+
 const table = require('text-table');
 
 module.exports = async function(args) {
-    let obj = {
-        title: {
-            text: `Egg Lookup`,
-            icon: config.embeds.servers.icon
-        },
-        color: config.embeds.servers.color,
-        footer: {
-            text: config.embeds.footer.text,
-            icon: config.embeds.footer.icon
-        }
-    };
+    
+    let obj = util.baseEmbedObj(args);
+
     try {
         const data = await request.get(`/nests/${args[3]}/eggs/${args[4]}`);
         const created = new Date(data.attributes.created_at).toDateString();

@@ -1,22 +1,13 @@
 const request = require(`${process.env.root}/src/admin/request`);
-const config = require(`${process.env.root}/config`);
 const errors = require(`${process.env.root}/src/admin/error`);
 const util = require(`${process.env.root}/src/util.js`);
-const _ = require('underscore');
+
 const table = require('text-table');
 module.exports = async function(args) {
+    
     let id = args[3];
-    let obj = {
-        title: {
-            text: "Database Lookup",
-            icon: config.embeds.servers.icon
-        },
-        color: config.embeds.servers.color,
-        footer: {
-            text: config.embeds.footer.text,
-            icon: config.embeds.footer.icon
-        }
-    };
+    let obj = util.baseEmbedObj(args);
+
     if(isNaN(args[3])) {
         const servers = await request.getRecursive(`/servers`);
         for(const s of servers) {

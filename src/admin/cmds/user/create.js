@@ -1,24 +1,13 @@
 const request = require(`${process.env.root}/src/admin/request`);
-const config = require(`${process.env.root}/config`);
 const errors = require(`${process.env.root}/src/admin/error`);
 const util = require(`${process.env.root}/src/util.js`);
+
 const _ = require('underscore');
 const table = require('text-table');
 
 module.exports = async function(args) {
 
-    let obj = {
-        title: {
-            text: `User Creator`,
-            icon: config.embeds.servers.icon
-        },
-        color: config.embeds.servers.color,
-        desc: "",
-        footer: {
-            text: config.embeds.footer.text,
-            icon: config.embeds.footer.icon
-        }
-    };
+    let obj = util.baseEmbedObj(args);
 
     const params = await util.parseRawParams(
 
