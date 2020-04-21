@@ -1,4 +1,5 @@
-const config = require(`${process.env.root}/config`);
+const settings = require(`${process.env.root}/config/settings`);
+const shared_embeds = require(`${process.env.root}/config/embeds/shared`);
 const errors = {
     400: ['Probably a bad config.'],
     401: ['The Dino API key is probably invalid.'],
@@ -24,18 +25,18 @@ module.exports = function (error, location) {
 
     const obj = {
         title: {
-            text: config.embeds.error.title,
-            icon: config.embeds.error.icon
+            text: shared_embeds.error.title,
+            icon: shared_embeds.error.icon
         },
-        color: config.embeds.error.color,
+        color: shared_embeds.error.color,
         desc: `There was an error that I don't know how to handle.`,
         footer: {
-            icon: config.embeds.footer.icon,
-            text: config.embeds.footer.text
+            icon: shared_embeds.footer.icon,
+            text: shared_embeds.footer.text
         }
     }
     if (handled) {
-        obj.desc = `${handled[0]}\n\n${handled[1]}${(config.debug) ? `\n\n\`\`\`${location}\`\`\`` : ''}`;
+        obj.desc = `${handled[0]}\n\n${handled[1]}${(settings.debug) ? `\n\n\`\`\`${location}\`\`\`` : ''}`;
     } else {
         obj.desc = "Unhandled";
     }
@@ -47,7 +48,7 @@ module.exports = function (error, location) {
         obj.desc = `${obj.desc}\n\`\`\`\n${build}\`\`\``;
     }
 
-    if (config.debug) {
+    if (settings.debug) {
         console.log(`Parsed error : ${(error.response) ? error.response.status : error.code} | in : ${location}`);
     }
     return obj;

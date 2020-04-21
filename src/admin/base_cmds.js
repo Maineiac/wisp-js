@@ -1,4 +1,4 @@
-const config = require(`${process.env.root}/config`);
+const settings = require(`${process.env.root}/config/settings`);
 const embed = require(`${process.env.root}/src/admin/embed`);
 const _ = require('underscore');
 const fs = require('fs');
@@ -29,7 +29,8 @@ module.exports = async function (args) {
         result = await embed( await exec(args) );
     }
 
-    if(config.debug) {
+    if(settings.debug) {
+        console.log(result);
         console.log(`Result took ${Date.now() - time}ms`);
     }
     return result;
