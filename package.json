@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "run": "nodemon index.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/Maineiac/wisp-js/issues"
   },
-  "homepage": "https://github.com/Maineiac/wisp-js#readme"
+  "homepage": "https://github.com/Maineiac/wisp-js#readme",
+  "nodemonConfig": {
+    "ignore": ["data/*"]
+  }
 }
