@@ -18,7 +18,7 @@ module.exports = function (error, location) {
     console.log(error);
 
     const handled = [
-        (error.response) ? `**${error.response.status}** | \`${error.response.statusText}\`` : error.code,
+        (error.response) ? `**${error.response.status}** | \`${error.response.statusText}\`` : `**${error.code}**`,
         errors[(error.response) ? error.response.status : error.code]
     ];
 
