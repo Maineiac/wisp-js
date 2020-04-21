@@ -37,17 +37,8 @@ module.exports = async function(args) {
             pack: data.attributes.pack,
             docker_image: data.attributes.container.image,
             startup: data.attributes.container.startup_command,
-            limits: {
-                memory: data.attributes.limits.memory,
-                swap: data.attributes.limits.swap,
-                disk: data.attributes.limits.disk,
-                io: data.attributes.limits.io,
-                cpu: data.attributes.limits.cpu
-            },
-            feature_limits: {
-                databases: data.attributes.feature_limits.databases,
-                allocations: data.attributes.feature_limits.allocations
-            },
+            limits: data.attributes.limits,
+            feature_limits: data.attributes.feature_limits,
             environment: data.attributes.container.environment
         }
         const ws = await fs.createWriteStream(`${process.env.root}/data/server_templates/${args[3]}.json`);
