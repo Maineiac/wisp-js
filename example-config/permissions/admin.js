@@ -23,3 +23,73 @@
 |*     Discord : https://discord.gg/myJKx9t    *|
 |*                                             *|
 \***********************************************/
+
+// You can define more constants to name your role id's
+// Or you can add id's like the other examples
+const master = "Someid";
+const anotherole = "anotherid";
+
+module.exports = {
+    location: {
+        create: [master, "moreids", "moreids2"],
+        delete: [master, "moreids"],
+        edit: [master, "moreids"],
+        get: [master, anotherole, "moreids"],
+        list: [master, anotherole, "moreids"]
+    },
+    nest: {
+        get: [master, anotherole],
+        list: [master, anotherole],
+        egg: {
+            get: [master, anotherole],
+            list: [master, anotherole]
+        }
+    },
+    node: {
+        allocation: {
+            create: [master],
+            delete: [master],
+            list: [master, anotherole]
+        },
+        delete: [master],
+        edit: [master],
+        get: [master, anotherole],
+        list: [master, anotherole]
+    },
+    server: {
+        database: {
+            list: [master],
+            create: [master],
+            "reset-password": [master],
+            delete: [master]
+        },
+        edit: {
+            details: [master],
+            limits: [master],
+            container: [master]
+        },
+        get: {
+            all: [master,anotherole],
+            details: [master, anotherole],
+            limits: [master, anotherole],
+            container: [master, anotherole]
+        },
+        create: [master],
+        delete: [master],
+        list: [master, anotherole],
+        rebuild: [master],
+        reinstall: [master],
+        save: [master],
+        suspend: [master],
+        unsuspend: [master]
+        
+    },
+    user: {
+        create: [master],
+        delete: [master],
+        edit: [master],
+        get: [master],
+        list: [master]
+    }
+
+}
