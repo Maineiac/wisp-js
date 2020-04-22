@@ -1,13 +1,12 @@
 
 const request = require(`${process.env.root}/src/admin/request`);
-const config = require(`${process.env.root}/config`);
 const errors = require(`${process.env.root}/src/admin/error`);
 const util = require(`${process.env.root}/src/util.js`);
 
 const fs = require('fs');
 const _ = require('underscore');
 
-const getServer = require('./get/get')
+const getServer = require('./get/all')
 
 module.exports = async function(args) {
 
