@@ -6,14 +6,12 @@ const table = require('text-table');
 
 module.exports = async function(args) {
 
-    const page = (args[4]) ? args[4] : 1;
     let obj = util.baseEmbedObj(args);
     let data;
     let array = [["ID", "Name"]];
 
     try {
-        data = await request.get(`/servers/${args[3]}/databases/${page}`);
-        console.log(data.data);
+        data = await request.get(`/servers/${args[3]}/databases`);
 
     } catch(error) {
         return errors(error, 'admin/list/database.js : line 26');
