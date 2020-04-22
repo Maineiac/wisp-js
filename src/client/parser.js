@@ -3,7 +3,6 @@ const _ = require('underscore');
 const settings = require(`${process.env.root}/config/settings`);
 const aliases = require(`${process.env.root}/config/aliases`);
 const permissions = require(`${process.env.root}/config/permissions/client`);
-const embed = require(`${process.env.root}/src/client/embed`);
 
 const r = `${process.env.root}/src/client/cmds/`;
 
@@ -24,18 +23,14 @@ module.exports = async function (args, roles) { // Expects args to be Array()
 
     if(_.isFunction(cmds[args[0]])) {
 
-        result = await embed(
-            await cmds[args[0]]()
-        );
+        result = await cmds[args[0]]();
         
     } else if(_.isFunction(cmds.alias[args[1]]) && aliases.hasOwnProperty(args[0]))  {
 
         if(roles.some(role => permissions[args[1]].includes(role))
         || permissions[args[1]].includes('*')) {
 
-            result = await embed(
-                await cmds.alias[args[1]](args)
-            );
+            result = await cmds.alias[args[1]](args);
 
         } else {
             result = `You don't have permission to use \`${args[1]}\``;

@@ -1,4 +1,8 @@
 const settings = require(`${process.env.root}/config/settings`);
+const embed = require(`${process.env.root}/src/embed`);
+const client = require(`${process.env.root}/src/client/parser`);
+const admin = require(`${process.env.root}/src/admin/parser`);
+
 const _ = require('underscore');
 
 module.exports = async function(msg) {
@@ -10,16 +14,16 @@ module.exports = async function(msg) {
         let result;
         let args = msg.content.slice(settings.prefix.length).trim().split(/ +/g);
 
-        if(settings.enableClient) {
-            result = await require('./client/parser')(args, msg.member.roles.member._roles);
+        if(settings.enableClient && !result) {
+            result = await client(args, msg.member.roles.member._roles);
             
         }
         if(settings.enableAdmin && !result) {
-            result = await require('./admin/parser')(args, msg.member.roles.member._roles);
+            result = await admin(args, msg.member.roles.member._roles);
 
         }
 
-        msg.channel.send((result) ? result : `Invalid command ${args[0]}`);
+        msg.channel.send((result) ? (_.isObject(result)) ? await embed(result) : result : `Invalid command ${args[0]}`);
 
 
     }

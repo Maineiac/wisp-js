@@ -110,7 +110,7 @@ module.exports = async function (args, roles) {
 
     if(_.isFunction(cmd)) {
         if(roles.some(role => perms.includes(role))) {
-            result = await embed( await cmd(args) ); 
+            result = await cmd(args)
 
         } else {
             result = `No permission to run command/subcommand \`${last}\``;
