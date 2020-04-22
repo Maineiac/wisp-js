@@ -29,6 +29,10 @@ module.exports = {
     // The character that starts every command.
     prefix: `!`,
 
+    // Enable/Disable the Client API, and/or the Admin (Application) API.
+    enableClient: true,
+    enableAdmin: true,
+    
     // This one changes the bot's activity "Playing somegame"
     activity: { // Do not edit this line.
 

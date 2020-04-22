@@ -27,7 +27,7 @@
 \***********************************************/
 
 
-exports.permissions = {
+module.exports = {
     status: ['*'], // * = No permissions required
     players: ['*'],
     cmd: ['someid', 'someid'], // If you need to, keep adding roles.
