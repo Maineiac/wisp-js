@@ -1,6 +1,9 @@
-const config = require('../../../config');
-const request = require('../request');
-const errors = require('../error');
+const settings = require(`${process.env.root}/config/settings`);
+const aliases = require(`${process.env.root}/config/aliases`);
+const client_embeds = require(`${process.env.root}/config/embeds/client`);
+const shared_embeds = require(`${process.env.root}/config/embeds/shared`);
+const request = require(`${process.env.root}/src/client/request`);
+const errors = require(`${process.env.root}/src/client/error`);
 
 const table = require('text-table');
 const _ = require('underscore');
@@ -9,17 +12,17 @@ module.exports = async function(args) {
     let data, response;
     let obj = {
         title: {
-            text: config.embeds.status.title,
-            icon: config.embeds.status.icon
+            text: client_embeds.status.title,
+            icon: client_embeds.status.icon
         },
-        color: config.embeds.error.color,
+        color: client_embeds.error.color,
         footer: {
-            text: config.embeds.footer.text,
-            icon: config.embeds.footer.icon
+            text: shared_embeds.footer.text,
+            icon: shared_embeds.footer.icon
         }
     };
     try {
-        response = await request.get(`/servers/${config.servers[args[0]]}/utilization`);
+        response = await request.get(`/servers/${aliases[args[0]]}/utilization`);
         data = response.attributes;
 
     } catch(error) {
@@ -29,7 +32,7 @@ module.exports = async function(args) {
     }
     let array = [];
     if(data.state == "on") {
-        obj.color = config.embeds.status.color.running;
+        obj.color = client_embeds.status.color.running;
         obj.head = data.query.name;
         console.log(data);
         // Check the current/max player count WISP can get (pretty much useless, there for sanity)
@@ -53,16 +56,16 @@ module.exports = async function(args) {
             (curplayers != "??" && maxplayers != "??") ? ["Players", curplayers+'/'+maxplayers] : null
         ]);
         if(maxplayers == "" || !data.query) {
-            if(config.debug) { console.log(data); }
+            if(settings.debug) { console.log(data); }
         }
         obj.desc = '```'+table(array, { align: [ 'r', 'l' ], hsep: [ '   ' ] })+'```';
 
     } else if(data.state == "starting") {
-        obj.color = config.embeds.status.color.starting;
+        obj.color = client_embeds.status.color.starting;
         obj.name = "Server starting";
 
     } else {
-        obj.color = config.embeds.status.color.stopped;
+        obj.color = client_embeds.status.color.stopped;
         obj.name = "Server offline";
     }
     return obj;

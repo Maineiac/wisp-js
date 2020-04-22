@@ -1,4 +1,5 @@
-const config = require('../../config');
+const settings = require(`${process.env.root}/config/settings`);
+const shared_embeds = require(`${process.env.root}/config/embeds/shared`);
 const errors = {
     400: ['**400** | `Bad Request`', 'Probably a bad config.'],
     401: ['**401** | `Unauthorized`', 'The Dino API key is probably invalid.'],
@@ -14,22 +15,23 @@ const errors = {
     'ECONNABORTED': ['**ECONNABORTED**', 'Axios timed out (took more than 5 seconds) while sending/waiting for a response.']
 }
 module.exports = function(error, location) {
+    console.log(error)
     const handled = errors[
         (error.response) ? error.response.status : error.code
     ];
     const obj = {
         title: {
-            text: config.embeds.error.title,
-            icon: config.embeds.error.icon
+            text: shared_embeds.error.title,
+            icon: shared_embeds.error.icon
         },  
-        color: config.embeds.error.color, 
-        desc: `${handled[0]}\n\n${handled[1]}${(config.debug) ? `\n\n\`\`\`${location}\`\`\`` : ''}`,
+        color: shared_embeds.error.color, 
+        desc: `${handled[0]}\n\n${handled[1]}${(settings.debug) ? `\n\n\`\`\`${location}\`\`\`` : ''}`,
         footer: {
-            icon: config.embeds.footer.icon,
-            text: config.embeds.footer.text
+            icon: shared_embeds.footer.icon,
+            text: shared_embeds.footer.text
         }
     }
-    if(config.debug) {
+    if(settings.debug) {
         console.log(`Parsed error : ${(error.response) ? error.response.status : error.code} | in : ${location}`);
     }
     return obj;

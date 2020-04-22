@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const config = require('../../config.js');
 module.exports = async function(prop) {
     const embed = new Discord.MessageEmbed();
     if (prop.title) { embed.setAuthor(prop.title.text, prop.title.icon) }

@@ -1,6 +1,9 @@
-const config = require('../../../config');
-const request = require('../request');
-const errors = require('../error');
+const settings = require(`${process.env.root}/config/settings`);
+const aliases = require(`${process.env.root}/config/aliases`);
+const client_embeds = require(`${process.env.root}/config/embeds/client`);
+const shared_embeds = require(`${process.env.root}/config/embeds/shared`);
+const request = require(`${process.env.root}/src/client/request`);
+const errors = require(`${process.env.root}/src/client/error`);
 
 const table = require('text-table');
 
@@ -25,7 +28,7 @@ function formatTime(seconds) {
 module.exports = async function(args) {
     let response, data;
     try {
-        response = await request.get(`/servers/${config.servers[args[0]]}/utilization`);
+        response = await request.get(`/servers/${aliases[args[0]]}/utilization`);
         data = response.attributes;
     } catch(error) {
 
@@ -34,25 +37,25 @@ module.exports = async function(args) {
     }
     let obj = {
         title: {
-            text: config.embeds.players.title,
-            icon: config.embeds.players.icon
+            text: client_embeds.players.title,
+            icon: client_embeds.players.icon
         },
         footer: {
-            text: config.embeds.footer.text,
-            icon: config.embeds.footer.icon
+            text: shared_embeds.footer.text,
+            icon: shared_embeds.footer.icon
         }
     };
 
     if(data.state == "off") {
-        obj.color =  config.embeds.players.color.stopped
+        obj.color =  client_embeds.players.color.stopped
         obj.name = "Server offline";
 
     } else if(data.state == "starting") {
-        obj.color = config.embeds.players.color.starting;
+        obj.color = client_embeds.players.color.starting;
         obj.name = "Server starting";
 
     } else if(!Object.keys(data.query).length) {
-        if(config.debug) { console.log(data); }
+        if(settings.debug) { console.log(data); }
         obj.name = "Server can't be queried."; // Sadly I can't do anything about this :pepecry:
         obj.desc = "This game/voice server type doesn't support queries.";
 
@@ -61,7 +64,7 @@ module.exports = async function(args) {
         obj.name = data.query.name;
         var array = [['Name', 'Score', 'Time']];
         var players = data.query.players.concat(data.query.bots);
-        obj.color = config.embeds.players.color.running;
+        obj.color = client_embeds.players.color.running;
 
         for (var i = 0; i < players.length; i++) {
             // Each player is stored as an array inside of array array[playerindex]

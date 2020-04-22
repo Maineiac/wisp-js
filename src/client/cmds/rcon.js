@@ -1,6 +1,8 @@
-const config = require('../../../config');
-const request = require('../request');
-const errors = require('../error');
+const aliases = require(`${process.env.root}/config/aliases`);
+const client_embeds = require(`${process.env.root}/config/embeds/client`);
+const shared_embeds = require(`${process.env.root}/config/embeds/shared`);
+const request = require(`${process.env.root}/src/client/request`);
+const errors = require(`${process.env.root}/src/client/error`);
 
 module.exports = async function(args) {
 
@@ -11,15 +13,15 @@ module.exports = async function(args) {
     let obj = {
 
         title: {
-            text: config.embeds[args[1]].title,
-            icon: config.embeds[args[1]].icon
+            text: client_embeds[args[1]].title,
+            icon: client_embeds[args[1]].icon
         },
 
-        color: config.embeds[args[1]].color.failure,
+        color: client_embeds[args[1]].color.failure,
 
         footer: {
-            text: config.embeds.footer.text,
-            icon: config.embeds.footer.icon
+            text: shared_embeds.footer.text,
+            icon: shared_embeds.footer.icon
         }
 
     }
@@ -36,11 +38,11 @@ module.exports = async function(args) {
 
     try {
         result = await request.post(
-            `servers/${config.servers[args[0]]}/${type}`, 
+            `servers/${aliases[args[0]]}/${type}`, 
             {[signal]: data}
         );
         if(result.status && result.status == 204) {
-            obj.color = config.embeds[args[1]].color.success
+            obj.color = client_embeds[args[1]].color.success
         }
     } catch(error) {
         // 404 - Bad server id/url
