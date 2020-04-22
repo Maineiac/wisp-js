@@ -2,6 +2,7 @@ const settings = require(`${process.env.root}/config/settings`);
 const embed = require(`${process.env.root}/src/embed`);
 const client = require(`${process.env.root}/src/client/parser`);
 const admin = require(`${process.env.root}/src/admin/parser`);
+const help = require(`${process.env.root}/src/shared/cmds/help`);
 
 const _ = require('underscore');
 
@@ -14,6 +15,9 @@ module.exports = async function(msg) {
         let result;
         let args = msg.content.slice(settings.prefix.length).trim().split(/ +/g);
 
+        if(args[0] == 'help') {
+            result = await help(args);
+        }
         if(settings.enableClient && !result) {
             result = await client(args, msg.member.roles.member._roles);
             
