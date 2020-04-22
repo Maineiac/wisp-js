@@ -10,7 +10,7 @@ module.exports = async function() {
 \`[] = optional\`\n
 \`\`\`dsconfig\n${p}server database list (serverid)\`\`\`Example : \`!server database list 21\`\n
 \`\`\`dsconfig\n${p}server database get (serverid) (databaseid)\`\`\`Example : \`!server database get 21 18\`\n
-\`\`\`dsconfig\n${p}server database delete (serverid) (databaseid/ids)\`\`\`Example : \`! database delete 21 3,6,9\`\n
+\`\`\`dsconfig\n${p}server database delete (serverid) (databaseid/ids)\`\`\`Example : \`!server database delete 21 3,6,9\`\n
 \`\`\`dsconfig\n${p}server database create (serverid) (databasename) (databasehostid) [remotehost]\`\`\`Example : \`!server database create 3 newdb 6 %\`\n
 \`\`\`dsconfig\n${p}server database reset-password (serverid) (databaseid/ids)\`\`\`Example : \`!server database reset-password 21 3\`\n
 `
