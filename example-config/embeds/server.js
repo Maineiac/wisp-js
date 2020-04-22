@@ -41,7 +41,7 @@ module.exports = {
             color: 16751104,
             icon: "https://img.maineiac.dev/wisp_icons/ico_wisp_servers2.png",
         },
-        get: {
+        list: {
             title: "Database List",
             color: 16751104,
             icon: "https://img.maineiac.dev/wisp_icons/ico_wisp_servers2.png",
