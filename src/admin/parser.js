@@ -1,9 +1,7 @@
 const settings = require(`${process.env.root}/config/settings`);
 const permissions = require(`${process.env.root}/config/permissions/admin`);
-const embed = require(`${process.env.root}/src/admin/embed`);
 
 const _ = require('underscore');
-const fs = require('fs');
 
 const r = `${process.env.root}/src/admin/cmds/`;
 
