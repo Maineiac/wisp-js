@@ -9,7 +9,7 @@ module.exports = async function(args) {
     
     let id = args[3];
     let obj = util.baseEmbedObj(args);
-
+    console.log(args)
     if(isNaN(args[3])) {
         const servers = await request.getRecursive(`/servers`);
         for(const s of servers) {
@@ -22,7 +22,7 @@ module.exports = async function(args) {
     try {
         const data = await request.get(`/servers/${id}`);
         const created = new Date(data.attributes.created_at).toDateString();
-        if(config.fancyEmbeds) {
+        /*if(config.fancyEmbeds) {
             const details = [
                 [`ID`, data.attributes.id],
                 [`External ID`, data.attributes.external_id],
@@ -45,7 +45,7 @@ module.exports = async function(args) {
             ]
                 
             obj.desc = `${data.attributes.description}`;
-        } else {
+        } else {*/
             const array = [
                 [`ID`, data.attributes.id],
                 [`External ID`, data.attributes.external_id],
@@ -62,7 +62,7 @@ module.exports = async function(args) {
                 
             ]
             obj.desc = `${data.attributes.description}\`\`\`${table(util.cleanArray(array), { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
-        }
+        //}
         return obj;
     } catch(error) {
         return errors(error, 'admin/user/get/details.js : line 51');
