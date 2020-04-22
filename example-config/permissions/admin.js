@@ -60,6 +60,7 @@ module.exports = {
         database: {
             list: [master],
             create: [master],
+            get: [master],
             "reset-password": [master],
             delete: [master]
         },
