@@ -1,11 +1,11 @@
 const location_embeds = require(`${process.env.root}/config/embeds/location`);
-const shared_embeds = require(`${process.env.root}/config/embeds/shared`);
 const embeds = {
     location: require(`${process.env.root}/config/embeds/location`),
     nest: require(`${process.env.root}/config/embeds/nest`),
     node: require(`${process.env.root}/config/embeds/node`),
     server: require(`${process.env.root}/config/embeds/server`),
-    user: require(`${process.env.root}/config/embeds/user`)
+    user: require(`${process.env.root}/config/embeds/user`),
+    shared: require(`${process.env.root}/config/embeds/shared`)
 }
 const _ = require('underscore');
 
@@ -90,11 +90,10 @@ module.exports.cleanArray = function(array) {
 
 module.exports.baseEmbedObj = function(args) {
     let type;
-    console.log(type);
     for(const a of args) {
         if(_.isObject(embeds[a])) {
             type = embeds[a]
-        } else if (_.isObject(type[a])) {
+        } else if (type && _.isObject(type[a])) {
             type = type[a];
         }
     }
@@ -106,8 +105,8 @@ module.exports.baseEmbedObj = function(args) {
         color: type.color,
         desc: "",
         footer: {
-            text: shared_embeds.footer.text,
-            icon: shared_embeds.footer.icon
+            text: embeds.shared.footer.text,
+            icon: embeds.shared.footer.icon
         }
     };
     return obj;
