@@ -1,16 +1,26 @@
-const config = require('../config');
+const settings = require(`${process.env.root}/config/settings`);
+const _ = require('underscore');
 
 module.exports = async function(msg) {
-    if(msg.content.startsWith(config.prefix) && !msg.author.bot) { 
-        try {
-            let args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
-            let result;
-            result = await require('./client/cmds')(args, msg.member.roles.member._roles);
-            if(!result) { result = "There was an error communicating with the server. Please check your config." }
-            msg.channel.send(result);
-        } catch(error) {
-            console.log(error);
-            msg.channel.send(error);
+    if(msg.content.startsWith(settings.prefix) && 
+    !msg.content.startsWith(`${settings.prefix}${settings.prefix}`) && 
+    msg.content != settings.prefix &&
+    !msg.author.bot) {  
+
+        let result;
+        let args = msg.content.slice(settings.prefix.length).trim().split(/ +/g);
+
+        if(settings.enableClient) {
+            result = await require('./client/parser')(args, msg.member.roles.member._roles);
+            
         }
+        if(settings.enableAdmin && !result) {
+            result = await require('./admin/parser')(args, msg.member.roles.member._roles);
+
+        }
+
+        msg.channel.send((result) ? result : `Invalid command ${args[0]}`);
+
+
     }
 }
