@@ -90,13 +90,13 @@ module.exports = async function (args, roles) {
             temp_cmd = cmds[a];
 
         } else if(
-        _.isObject(temp_perms[a]) && !_.isFunction(temp_perms[a]) &&
-        _.isObject(temp_cmd[a]) && !_.isFunction(temp_cmd[a])) {
+        temp_perms && _.isObject(temp_perms[a]) && !_.isFunction(temp_perms[a]) &&
+        temp_cmd && _.isObject(temp_cmd[a]) && !_.isFunction(temp_cmd[a])) {
 
             temp_perms = temp_perms[a];
             temp_cmd = temp_cmd[a];
 
-        } else if(_.isArray(temp_perms[a]) && _.isFunction(temp_cmd[a])) {
+        } else if(temp_perms && _.isArray(temp_perms[a]) && temp_cmd && _.isFunction(temp_cmd[a])) {
 
             perms = temp_perms[a];
             cmd = temp_cmd[a]; 
