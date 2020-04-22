@@ -7,14 +7,14 @@ const table = require('text-table');
 
 module.exports = async function(args) {
 
-    let id = args[2];
-    let obj = util.baseEmbedObj(args);
+    let id = args[3];
+    let obj = util.baseEmbedObj(["server", "get", "get"]);
 
-    if(isNaN(args[2])) {
+    if(isNaN(args[3])) {
         const servers = await request.getRecursive(`/servers`);
         for(const s of servers) {
             console.log(s.attributes.identifier)
-            if(args[2] == s.attributes.identifier) {
+            if(args[3] == s.attributes.identifier) {
                 id = s.attributes.id;
             }
         }
@@ -22,7 +22,7 @@ module.exports = async function(args) {
     try {
         const data = await request.get(`/servers/${id}`);
         const created = new Date(data.attributes.created_at).toDateString();
-        if(config.fancyEmbeds) {
+        /*if(config.fancyEmbeds) {
             const details = [
                 [`ID`, data.attributes.id],
                 [`External ID`, data.attributes.external_id],
@@ -53,7 +53,7 @@ module.exports = async function(args) {
             ]
                 
             obj.desc = `${data.attributes.description}`;
-        } else {
+        } else {*/
             const array = [
                 [`ID`, data.attributes.id],
                 [`External ID`, data.attributes.external_id],
@@ -81,7 +81,7 @@ module.exports = async function(args) {
             ]
                 
             obj.desc = `${data.attributes.description}\`\`\`${table(util.cleanArray(array), { align: [ 'r', 'l'], hsep: [ '   ' ] })}\`\`\``;
-        }
+        //}
         return obj;
     } catch(error) {
         return errors(error, 'admin/server/get/get.js : line 51');
