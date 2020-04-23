@@ -10,10 +10,8 @@ This supports both the client and application api. You can use this bot on a com
 
 ## Requirements
 
-* One or more servers with a host that uses the WISP Panel
-* Any server that you can install Node.js on, and host this
+* Any machine that you can install Node.js on, and host this
 * Node.js 12+
-* discord.js 12+
 * At least enough programming knowledge to edit a configuration file or two.
 
 ## Client Features <sup><sub>Note: Some commands may not work with certain server types.</sub></sup>
@@ -40,14 +38,21 @@ You'll have to install Node.js. Here are some tutorials
 
 [Node.js Installation - Linux](https://treehouse.github.io/installation-guides/linux/node-linux.html)
 
-Once you've done that you'll pull this repo somewhere and install the dependencies with the following command.
+Once you've done that you'll clone/download this repo somewhere and install the dependencies with the following command.
 ```bash
 npm install
 ```
 
 ## Setup
 
-Configuration is important. Please see the [WIKI](https://wispjs.isbad.gg).
+Rename the `example-config` directory to `config`
+
+* Authorization | Required | `/config/authorization.js`
+* Settings | Required | `/config/settings.js`
+* Server Aliases | Client Side Only | `/config/aliases.js`
+* Permissions | Required(side based) | `/config/permissions/(client/admin).js`
+
+Configuration is important. Please see the [WIKI](https://wispjs.isbad.gg) for more information.
 
 ```bash
 node index.js
