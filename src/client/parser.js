@@ -7,7 +7,6 @@ const permissions = require(`${process.env.root}/config/permissions/client`);
 const r = `${process.env.root}/src/client/cmds/`;
 
 const cmds = {
-    help: require(`${r}help`),
     servers: require(`${r}servers`),
     alias: {
         status: require(`${r}status`),
