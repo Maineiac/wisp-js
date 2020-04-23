@@ -11,7 +11,8 @@ const cmds = {
         delete: require(`${r}location/delete`),
         edit: require(`${r}location/edit`),
         get: require(`${r}location/get`),
-        list: require(`${r}location/list`)
+        list: require(`${r}location/list`),
+        help: require(`${r}location/help`)
     },
     nest: {
         get: require(`${r}nest/get`),
@@ -19,36 +20,43 @@ const cmds = {
         egg: {
             get: require(`${r}nest/egg/get`),
             list: require(`${r}nest/egg/list`)
-        }
+        },
+        help: require(`${r}nest/help`)
     },
     node: {
         allocation: {
             create: require(`${r}node/allocation/create`),
             delete: require(`${r}node/allocation/delete`),
-            list: require(`${r}node/allocation/list`)
+            list: require(`${r}node/allocation/list`),
+            help: require(`${r}node/allocation/help`)
         },
         delete: require(`${r}node/delete`),
         edit: require(`${r}node/edit`),
         get: require(`${r}node/get`),
-        list: require(`${r}node/list`)
+        list: require(`${r}node/list`),
+        help: require(`${r}node/help`)
     },
     server: {
         database: {
             list: require(`${r}server/database/list`),
             create: require(`${r}server/database/create`),
+            get: require(`${r}server/database/get`),
             "reset-password": require(`${r}server/database/reset-password`),
-            delete: require(`${r}server/database/delete`)
+            delete: require(`${r}server/database/delete`),
+            help: require(`${r}server/database/help`)
         },
         edit: {
             details: require(`${r}server/edit/details`),
             limits: require(`${r}server/edit/limits`),
-            container: require(`${r}server/edit/container`)
+            container: require(`${r}server/edit/container`),
+            help: require(`${r}server/edit/help`)
         },
         get: {
             all: require(`${r}server/get/all`),
             details: require(`${r}server/get/details`),
             limits: require(`${r}server/get/limits`),
-            container: require(`${r}server/get/container`)
+            container: require(`${r}server/get/container`),
+            help: require(`${r}server/get/help`)
         },
         create: require(`${r}server/create`),
         delete: require(`${r}server/delete`),
@@ -57,7 +65,8 @@ const cmds = {
         reinstall: require(`${r}server/reinstall`),
         save: require(`${r}server/save`),
         suspend: require(`${r}server/suspend`),
-        unsuspend: require(`${r}server/unsuspend`)
+        unsuspend: require(`${r}server/unsuspend`),
+        help: require(`${r}server/help`)
         
     },
     user: {
@@ -65,9 +74,11 @@ const cmds = {
         delete: require(`${r}user/delete`),
         edit: require(`${r}user/edit`),
         get: require(`${r}user/get`),
-        list: require(`${r}user/list`)
+        list: require(`${r}user/list`),
+        help: require(`${r}user/help`)
     }
 }
+
 
 module.exports = async function (args, roles) {
 
@@ -81,33 +92,37 @@ module.exports = async function (args, roles) {
         const a = args[i];
         
         if(
-        _.isObject(permissions[a]) && !_.isFunction(permissions[a]) && 
+        //_.isObject(permissions[a]) && !_.isFunction(permissions[a]) && 
         _.isObject(cmds[a]) && !_.isFunction(cmds[a])) {
 
             temp_perms = permissions[a];
             temp_cmd = cmds[a];
 
         } else if(
-        temp_perms && _.isObject(temp_perms[a]) && !_.isFunction(temp_perms[a]) &&
+        //temp_perms && _.isObject(temp_perms[a]) && !_.isFunction(temp_perms[a]) &&
         temp_cmd && _.isObject(temp_cmd[a]) && !_.isFunction(temp_cmd[a])) {
 
             temp_perms = temp_perms[a];
             temp_cmd = temp_cmd[a];
 
-        } else if(temp_perms && _.isArray(temp_perms[a]) && temp_cmd && _.isFunction(temp_cmd[a])) {
+        } else if(/*temp_perms && _.isArray(temp_perms[a]) && */temp_cmd && _.isFunction(temp_cmd[a])) {
 
             perms = temp_perms[a];
             cmd = temp_cmd[a]; 
             last = a;
+            console.log("Stopping : ");
+            console.log(cmd)
             break;
         } else { 
             result = `Unknown command/subcommand \`${a}\``;
 
         }
+        console.log("Running : ");
+        console.log(temp_cmd);
     }
 
     if(_.isFunction(cmd)) {
-        if(roles.some(role => perms.includes(role))) {
+        if(args.includes('help') || roles.some(role => perms.includes(role)) || perms.includes('*')) {
             result = await cmd(args)
 
         } else {
