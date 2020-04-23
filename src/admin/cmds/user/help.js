@@ -3,7 +3,7 @@ const settings = require(`${process.env.root}/config/settings`);
 module.exports = async function() {
     const p = settings.prefix;
     let obj = util.baseEmbedObj(["shared", "help"]);
-    obj.title.text = `${obj.title.text} | Location Commands`;
+    obj.title.text = `${obj.title.text} | User Commands`;
     obj.desc = `
 **Key** :
 \`() = required\`
