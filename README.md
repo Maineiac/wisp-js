@@ -2,21 +2,19 @@
 
 # WISP-JS
 
-WISP-JS is a discord bot for use with the [WISP](https://wisp.gg) api [(Docs)](https://docs.panel.gg). 
+WISP-JS is a discord bot for use with the [WISP](https://wisp.gg) api : [(WISP Docs)](https://docs.panel.gg). 
 
-## <sub>Currently only for the Client API.</sub><sup><sub>ACP soon<sup><sub>tm</sub></sup></sub></sup>
-There are planned features for interaction with the ACP API (Pterodactyl API), this readme will be updated when that's a reality.
+This supports both the client and application api. You can use this bot on a community level, for simply querying your game server. Or you can use this on a host level, allowing you to manipulate nodes, users, servers, locations, and nests from discord. This is of course configurable. The client and application sides can be toggled on and off individually.
+
 
 
 ## Requirements
 
-* One or more servers with a host that uses the WISP Panel
-* Any server that you can install Node.js on, and host this
+* Any machine that you can install Node.js on, and host this
 * Node.js 12+
-* discord.js 12+
-* At least enough programming knowledge to edit a configuration file.
+* At least enough programming knowledge to edit a configuration file or two.
 
-## Features <sup><sub>Note: Some commands may not work with certain server types.</sub></sup>
+## Client Features <sup><sub>Note: Some commands may not work with certain server types.</sub></sup>
 
 * Supports multiple servers
 * Role based permissions system
@@ -24,6 +22,12 @@ There are planned features for interaction with the ACP API (Pterodactyl API), t
 * Player list
 * Send power signal
 * Send console command
+
+## Application Features
+
+* 40 commands to manipulate nodes/users/servers/locations/nests
+* Role based permissions system
+* I should just list the commands, but see the [WIKI](https://wispjs.isbad.gg) instead
 
 
 ## Installation
@@ -34,22 +38,21 @@ You'll have to install Node.js. Here are some tutorials
 
 [Node.js Installation - Linux](https://treehouse.github.io/installation-guides/linux/node-linux.html)
 
-Once you've done that you'll pull this repo somewhere and install the dependencies with the following command.
+Once you've done that you'll clone/download this repo somewhere and install the dependencies with the following command.
 ```bash
 npm install
 ```
 
 ## Setup
 
-In order to continue, you'll need your WISP API key and Discord bot token.
+Rename the `example-config` directory to `config`
 
-[From the wisp docs](https://docs.panel.gg/#authentication) | You can create a new API key in the Security Controls tab which can be found on the navbar when viewing the server list in the game panel.
+* Authorization | Required | `/config/authorization.js`
+* Settings | Required | `/config/settings.js`
+* Server Aliases | Client Side Only | `/config/aliases.js`
+* Permissions | Required(side based) | `/config/permissions/(client/admin).js`
 
-[Discord Bot setup tutorial](https://discordpy.readthedocs.io/en/latest/discord.html) | Information for getting your bot token is in step 7.
-
-At this point you can rename example-config.js to config.js and follow the steps there.
-
-When finished you can run the bot with
+Configuration is important. Please see the [WIKI](https://wispjs.isbad.gg) for more information.
 
 ```bash
 node index.js
