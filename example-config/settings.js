@@ -36,7 +36,7 @@ module.exports = {
     // This one changes the bot's activity "Playing somegame"
     activity: { // Do not edit this line.
 
-        name: `for !help`, // This value can say whatever you want.
+        name: `for ${prefix}help`, // This value can say whatever you want.
 
         // This should be one of the following :
         // PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS
@@ -57,6 +57,10 @@ module.exports = {
 
     // Enable/Disable debug output in console.
     // False is recommended for production.
-    debug: false
+    debug: false,
+
+    // THIS JUST CALLS WHAT IS DEFINED AT THE TOP
+    // DONT TOUCH.
+    prefix: prefix
 
 }// Do not edit this line.
