@@ -9,7 +9,6 @@ module.exports = async function(args) {
     
     try {
         const data = await request.get(`/users/${args[2]}`);
-        console.log(data)
         const created = new Date(data.attributes.created_at).toDateString();
         const array = [
             [`ID`, data.attributes.id],

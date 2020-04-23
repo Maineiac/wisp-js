@@ -68,6 +68,5 @@ module.exports = async function(args) {
     } else {
         result = await unknownMenu();
     }
-    console.log(result);
     return result;
 }

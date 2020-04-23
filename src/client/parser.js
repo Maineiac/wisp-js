@@ -41,6 +41,7 @@ module.exports = async function (args, roles) { // Expects args to be Array()
     }
     let end = Date.now() - time;
     if(settings.debug) {
+        console.log(result);
         console.log(`Client: Result took ${end}ms`);
     }
     return result;

@@ -13,7 +13,6 @@ module.exports = async function(args) {
 
     try {
         data = await request.get(`/nests/${args[3]}/eggs`);
-        console.log(data.data[0]);
 
     } catch(error) {
         return errors(error, 'admin/allocation/list.js : line 26');

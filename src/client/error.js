@@ -15,7 +15,6 @@ const errors = {
     'ECONNABORTED': ['**ECONNABORTED**', 'Axios timed out (took more than 5 seconds) while sending/waiting for a response.']
 }
 module.exports = function(error, location) {
-    console.log(error)
     const handled = errors[
         (error.response) ? error.response.status : error.code
     ];
@@ -33,6 +32,7 @@ module.exports = function(error, location) {
     }
     if(settings.debug) {
         console.log(`Parsed error : ${(error.response) ? error.response.status : error.code} | in : ${location}`);
+        console.log(error)
     }
     return obj;
 }

@@ -11,7 +11,6 @@ module.exports = async function(args) {
     if(isNaN(args[3])) {
         const servers = await request.getRecursive(`/servers`);
         for(const s of servers) {
-            console.log(s.attributes.identifier)
             if(args[3] == s.attributes.identifier) {
                 id = s.attributes.id;
             }

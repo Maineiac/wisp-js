@@ -91,34 +91,26 @@ module.exports = async function (args, roles) {
 
         const a = args[i];
         
-        if(
-        //_.isObject(permissions[a]) && !_.isFunction(permissions[a]) && 
-        _.isObject(cmds[a]) && !_.isFunction(cmds[a])) {
+        if(_.isObject(cmds[a]) && !_.isFunction(cmds[a])) {
 
             temp_perms = permissions[a];
             temp_cmd = cmds[a];
 
-        } else if(
-        //temp_perms && _.isObject(temp_perms[a]) && !_.isFunction(temp_perms[a]) &&
-        temp_cmd && _.isObject(temp_cmd[a]) && !_.isFunction(temp_cmd[a])) {
+        } else if(temp_cmd && _.isObject(temp_cmd[a]) && !_.isFunction(temp_cmd[a])) {
 
             temp_perms = temp_perms[a];
             temp_cmd = temp_cmd[a];
 
-        } else if(/*temp_perms && _.isArray(temp_perms[a]) && */temp_cmd && _.isFunction(temp_cmd[a])) {
+        } else if(temp_cmd && _.isFunction(temp_cmd[a])) {
 
             perms = temp_perms[a];
             cmd = temp_cmd[a]; 
             last = a;
-            console.log("Stopping : ");
-            console.log(cmd)
             break;
         } else { 
             result = `Unknown command/subcommand \`${a}\``;
 
         }
-        console.log("Running : ");
-        console.log(temp_cmd);
     }
 
     if(_.isFunction(cmd)) {

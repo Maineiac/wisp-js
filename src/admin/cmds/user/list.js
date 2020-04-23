@@ -28,7 +28,6 @@ module.exports = async function() {
             (users[i].attributes.root_admin) ? "Admin" : "User"
         ]
     }
-    console.log(users[3])
     obj.desc = '```json\n'+table(array, { align: [ 'r', 'c', 'l' ], hsep: [ '     ' ] })+'```';
     return obj;
 

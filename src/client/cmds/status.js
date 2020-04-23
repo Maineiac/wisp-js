@@ -34,7 +34,6 @@ module.exports = async function(args) {
     if(data.state == "on") {
         obj.color = client_embeds.status.color.running;
         obj.head = data.query.name;
-        console.log(data);
         // Check the current/max player count WISP can get (pretty much useless, there for sanity)
         let curplayers = (data.players.current) ? data.players.current : "??";
         let maxplayers = data.query.maxplayers || "??";
@@ -56,7 +55,7 @@ module.exports = async function(args) {
             (curplayers != "??" && maxplayers != "??") ? ["Players", curplayers+'/'+maxplayers] : null
         ]);
         if(maxplayers == "" || !data.query) {
-            if(settings.debug) { console.log(data); }
+            if(settings.debug) { console.log(data); } // Will help with testing on object in future
         }
         obj.desc = '```'+table(array, { align: [ 'r', 'l' ], hsep: [ '   ' ] })+'```';
 

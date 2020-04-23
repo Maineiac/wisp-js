@@ -49,7 +49,6 @@ Example Bungeecord server : \n\`!server create name="A Bungeecord Server" user=3
     }
 
     const params = {...template, ...userparams}
-    console.log(params);
 
     try {
         

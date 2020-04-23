@@ -16,7 +16,6 @@ const errors = {
     'ENOENT': ['I needed, and was unable, to load a file on the system.']
 }
 module.exports = function (error, location) {
-    console.log(error);
 
     const handled = [
         (error.response) ? `**${error.response.status}** | \`${error.response.statusText}\`` : `**${error.code}**`,
@@ -50,6 +49,7 @@ module.exports = function (error, location) {
 
     if (settings.debug) {
         console.log(`Parsed error : ${(error.response) ? error.response.status : error.code} | in : ${location}`);
+        console.log(error);
     }
     return obj;
 }

@@ -37,7 +37,6 @@ module.exports.parseParamsWithQuotes = function(args) {
 module.exports.parseRawParams = function(params, base=false) {
 
     let newParams = (base) ? base : {};
-    console.log(params);
     if(params) {
         for(const p of params) {
             let arr = p.split("=");

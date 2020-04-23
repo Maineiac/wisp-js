@@ -13,7 +13,6 @@ module.exports = async function(args) {
 
     try {
         data = await request.get(`/servers?page=${page}`);
-        console.log(data.data[0]);
 
     } catch(error) {
         return errors(error, 'admin/server/list.js : line 26');

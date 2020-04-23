@@ -55,8 +55,8 @@ module.exports = async function(args) {
         obj.name = "Server starting";
 
     } else if(!Object.keys(data.query).length) {
-        if(settings.debug) { console.log(data); }
-        obj.name = "Server can't be queried."; // Sadly I can't do anything about this :pepecry:
+        if(settings.debug) { console.log(data); } // This will help if we want to see the object.
+        obj.name = "Server can't be queried.";
         obj.desc = "This game/voice server type doesn't support queries.";
 
     } else {
