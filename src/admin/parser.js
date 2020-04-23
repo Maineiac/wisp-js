@@ -58,6 +58,7 @@ const cmds = {
             container: require(`${r}server/get/container`),
             help: require(`${r}server/get/help`)
         },
+        clone: require(`${r}server/clone`),
         create: require(`${r}server/create`),
         delete: require(`${r}server/delete`),
         list: require(`${r}server/list`),

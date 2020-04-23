@@ -75,6 +75,7 @@ module.exports = {
             limits: [master, anotherole],
             container: [master, anotherole]
         },
+        clone: [master],
         create: [master],
         delete: [master],
         list: [master, anotherole],
