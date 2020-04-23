@@ -26,8 +26,8 @@ module.exports = {
     // Please include the trailing /
     PanelURL: "https://your.panel.gg/",
 
-    // The character that starts every command.
-    prefix: `!`,
+    // This starts every command
+    prefix: "!",
 
     // Enable/Disable the Client API, and/or the Admin (Application) API.
     enableClient: true,
@@ -36,7 +36,7 @@ module.exports = {
     // This one changes the bot's activity "Playing somegame"
     activity: { // Do not edit this line.
 
-        name: `for ${this.prefix}help`, // This value can say whatever you want.
+        name: `for !help`, // This value can say whatever you want.
 
         // This should be one of the following :
         // PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS
@@ -53,10 +53,10 @@ module.exports = {
     fancyEmbeds: false,
 
     // The cache holds servers, nodes, etc. Choose how long it waits before refreshing the data.
-    cacheTimer: 1,
+    cacheTimer: 30,
 
     // Enable/Disable debug output in console.
     // False is recommended for production.
-    debug: true
+    debug: false
 
 }// Do not edit this line.
