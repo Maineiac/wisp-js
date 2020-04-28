@@ -20,14 +20,14 @@
 |*                                             *|
 \***********************************************/
 
+// The character that starts every command.
+const prefix = "!" // This needs to be defined here so it can be used in the activity property
+
 module.exports = {
 
     // This is the root domain of you or your host's panel.
     // Please include the trailing /
     PanelURL: "https://your.panel.gg/",
-
-    // This starts every command
-    prefix: "!",
 
     // Enable/Disable the Client API, and/or the Admin (Application) API.
     enableClient: true,
