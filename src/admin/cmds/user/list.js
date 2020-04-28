@@ -4,7 +4,7 @@ const util = require(`${process.env.root}/src/util.js`);
 
 const table = require('text-table');
 
-module.exports = async function() {
+module.exports = async function(args) {
 
     let obj = util.baseEmbedObj(args);
     let array = [["ID", "Username", "Type"]];
